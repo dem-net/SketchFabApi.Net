@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DEM.Net.Extension.SketchFab.Export
@@ -15,7 +16,8 @@ namespace DEM.Net.Extension.SketchFab.Export
     {
         private readonly ILogger<SketchFabExporter> _logger;
         private readonly HttpClient _httpClient;
-        private const string SketchFabApi = "https://api.sketchfab.com/v3/";
+        private readonly JsonSerializerOptions _jsonSerializerOptions;
+        private const string SketchFabApi = "https://api.sketchfab.com/v3";
 
         /*
         # Uploading a model to Sketchfab is a two step process
@@ -39,6 +41,8 @@ namespace DEM.Net.Extension.SketchFab.Export
         {
             this._logger = logger;
             this._httpClient = new HttpClient();
+            this._jsonSerializerOptions = new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, IgnoreNullValues = true };
+            _jsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase, false));
         }
 
         public async Task<string> UploadFile(UploadModelRequest request)
@@ -70,15 +74,18 @@ namespace DEM.Net.Extension.SketchFab.Export
                 form.Add(new StringContent("license"), request.License);
                 form.Add(new StringContent("tags"), string.Join(Environment.NewLine, request.Tags));
                 form.Add(new StringContent("categories"), string.Join(Environment.NewLine, request.Categories));
-                form.Add(new StringContent("options"), JsonSerializer.Serialize(request.Options));
+
+                // Seems not working yet. TODO test with PATCH after
+                //var optionsJson = JsonSerializer.Serialize(request.Options, _jsonSerializerOptions);
+                //form.Add(new StringContent("options"), optionsJson);
 
                 httpRequestMessage.Content = form;
 
 
-                var response = await _httpClient.SendAsync(httpRequestMessage);
+                var response = await _httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
                 response.EnsureSuccessStatusCode();
                 string uuid = response.Headers.GetValues("Location").FirstOrDefault();
-                _logger.LogInformation("Uploading is complete.");
+                _logger.LogInformation("Uploading is complete. Model uuid is " + uuid);
                 return uuid;
             }
             catch (Exception ex)

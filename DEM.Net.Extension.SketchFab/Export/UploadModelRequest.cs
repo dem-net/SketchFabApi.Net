@@ -41,6 +41,6 @@ namespace DEM.Net.Extension.SketchFab.Export
 
         public string Description { get; set; }
 
-        public string Options { get; set; }
+        public ModelOptions Options { get; set; } = new ModelOptions();
     }
 }
