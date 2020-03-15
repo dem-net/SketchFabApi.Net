@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
@@ -7,9 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DEM.Net.Extension.SketchFab.Export
@@ -18,7 +16,7 @@ namespace DEM.Net.Extension.SketchFab.Export
     {
         private readonly ILogger<SketchFabExporter> _logger;
         private readonly HttpClient _httpClient;
-        private readonly JsonSerializerOptions _jsonSerializerOptions;
+        private readonly JsonSerializerSettings _jsonSerializerSettings;
         private const string SketchFabApi = "https://api.sketchfab.com/v3";
         private readonly DefaultContractResolver contractResolver = new DefaultContractResolver
         {
@@ -48,8 +46,14 @@ namespace DEM.Net.Extension.SketchFab.Export
         {
             this._logger = logger;
             this._httpClient = new HttpClient();
-            this._jsonSerializerOptions = new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, IgnoreNullValues = true };
-            _jsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase, false));
+            this._jsonSerializerSettings = new JsonSerializerSettings()
+            {
+                Formatting = Formatting.None,
+                NullValueHandling = NullValueHandling.Ignore,
+                ContractResolver = contractResolver
+            };
+            _jsonSerializerSettings.Converters.Add(new StringEnumConverter());
+            JsonConvert.DefaultSettings = () => _jsonSerializerSettings;
 
         }
 
@@ -59,8 +63,6 @@ namespace DEM.Net.Extension.SketchFab.Export
             try
             {
                 string uuid = await UploadFile(request);
-
-                await UpdateModel(uuid, request);
 
                 return request.ModelId;
             }
@@ -91,15 +93,9 @@ namespace DEM.Net.Extension.SketchFab.Export
                 using var fileContent = new ByteArrayContent(await File.ReadAllBytesAsync(request.FilePath));
                 fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
                 form.Add(fileContent, "modelFile", Path.GetFileName(request.FilePath));
-                form.Add(new StringContent("source"), "elevationapi");
-                form.Add(new StringContent("name"), ShortenString(request.Name, 48));
-                form.Add(new StringContent("description"), ShortenString(request.Description, 1024));
-                form.Add(new StringContent("private"), request.IsPrivate ? "0" : "1");
-                form.Add(new StringContent("isInspectable"), request.IsInspectable ? "0" : "1");
-                form.Add(new StringContent("isPublished"), request.IsPublished ? "0" : "1");
-                form.Add(new StringContent("license"), request.License);
-                form.Add(new StringContent("tags"), string.Join(Environment.NewLine, request.Tags));
-                form.Add(new StringContent("categories"), string.Join(Environment.NewLine, request.Categories));
+                form.Add(new StringContent("elevationapi"), "source");
+
+                AddCommonModelFields(form, request);
 
                 httpRequestMessage.Content = form;
 
@@ -133,16 +129,10 @@ namespace DEM.Net.Extension.SketchFab.Export
                 HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Patch, $"{SketchFabApi}/models/{modelUuid}");
                 httpRequestMessage.Headers.Add("Authorization", $"Token {request.Token}");
 
-                using var form = new MultipartFormDataContent("abcdef");
+                using var form = new MultipartFormDataContent();
                 form.Headers.ContentType.MediaType = "multipart/form-data";
-                form.Add(new StringContent("name"), ShortenString(request.Name, 48));
-                form.Add(new StringContent("description"), ShortenString(request.Description, 1024));
-                form.Add(new StringContent("private"), request.IsPrivate ? "0" : "1");
-                form.Add(new StringContent("isInspectable"), request.IsInspectable ? "0" : "1");
-                form.Add(new StringContent("isPublished"), request.IsPublished ? "0" : "1");
-                form.Add(new StringContent("license"), request.License);
-                form.Add(new StringContent("tags"), string.Join(Environment.NewLine, request.Tags));
-                form.Add(new StringContent("categories"), string.Join(Environment.NewLine, request.Categories));
+
+                AddCommonModelFields(form, request);
 
                 httpRequestMessage.Content = form;
 
@@ -150,7 +140,7 @@ namespace DEM.Net.Extension.SketchFab.Export
 
                 _logger.LogInformation($"{nameof(UpdateModel)} responded {response.StatusCode}");
                 response.EnsureSuccessStatusCode();
-               
+
             }
             catch (Exception ex)
             {
@@ -162,6 +152,20 @@ namespace DEM.Net.Extension.SketchFab.Export
         private string ShortenString(string str, int length)
         {
             return str.Substring(0, Math.Min(str.Length, length));
+        }
+        private void AddCommonModelFields(MultipartFormDataContent form, UploadModelRequest request)
+        {
+            form.Add(new StringContent(ShortenString(request.Name, 48)), "name");
+            form.Add(new StringContent(ShortenString(request.Description, 1024)), "description");
+            form.Add(new StringContent(request.IsPrivate.To_0_1()), "private");
+            form.Add(new StringContent(request.IsInspectable.To_0_1()), "isInspectable");
+            form.Add(new StringContent(request.IsPublished.To_0_1()), "isPublished");
+            form.Add(new StringContent(request.License), "license");
+            var optionsJson = JsonConvert.SerializeObject(request.Options);
+            form.Add(new StringContent(JsonConvert.SerializeObject(request.Options)), "options");
+            form.AddRange(request.Tags, "tags");
+            form.AddRange(request.Categories, "categories");
+
         }
     }
 }
