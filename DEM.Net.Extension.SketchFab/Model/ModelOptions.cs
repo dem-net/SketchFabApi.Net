@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 using Newtonsoft.Json.Converters;
 
-namespace DEM.Net.Extension.SketchFab.Export
+namespace DEM.Net.Extension.SketchFab
 {
     public class ModelOptions
     {

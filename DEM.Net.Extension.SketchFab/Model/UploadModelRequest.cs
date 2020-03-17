@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace DEM.Net.Extension.SketchFab.Export
+namespace DEM.Net.Extension.SketchFab
 {
     public class UploadModelRequest
     {
@@ -72,9 +72,6 @@ namespace DEM.Net.Extension.SketchFab.Export
 
         [JsonProperty("options")]
         public ModelOptions Options { get; set; } = new ModelOptions();
-
-        [JsonIgnore]
-        public string Token { get; set; }
 
         [JsonIgnore]
         public string FilePath { get; set; }
