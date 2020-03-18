@@ -27,7 +27,7 @@ namespace DEM.Net.Extension.SketchFab
             }
 
         }
-        public async Task<string> UploadFileAsync(UploadModelRequest request)
+        private async Task<string> UploadFileAsync(UploadModelRequest request)
         {
             try
             {
