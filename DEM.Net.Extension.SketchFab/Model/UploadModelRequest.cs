@@ -48,7 +48,7 @@ namespace DEM.Net.Extension.SketchFab
 
 
         [JsonIgnore]
-        public List<string> Tags { get; set; } = new List<string> { "elevationapi" };
+        public List<string> Tags { get; set; } = new List<string> { "mycenaean-atlas", "elevationapi", "mycenaean", "helladic", "terrain", "greece" };
 
         [JsonProperty("tags")]
         public string TagsJson => string.Join("\n", Tags);

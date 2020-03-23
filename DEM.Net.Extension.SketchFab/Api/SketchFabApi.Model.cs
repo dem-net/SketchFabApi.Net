@@ -12,6 +12,7 @@ namespace DEM.Net.Extension.SketchFab
 {
     public partial class SketchFabApi
     {
+        public static string Source = "elevationapi";
         public async Task<string> UploadModelAsync(UploadModelRequest request)
         {
             try
@@ -47,7 +48,7 @@ namespace DEM.Net.Extension.SketchFab
                 using var fileContent = new ByteArrayContent(await File.ReadAllBytesAsync(request.FilePath));
                 fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
                 form.Add(fileContent, "modelFile", Path.GetFileName(request.FilePath));
-                form.Add(new StringContent("elevationapi"), "source");
+                form.Add(new StringContent(SketchFabApi.Source), "source");
 
                 AddCommonModelFields(form, request);
 
