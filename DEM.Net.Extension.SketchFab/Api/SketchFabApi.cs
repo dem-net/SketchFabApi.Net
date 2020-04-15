@@ -1,6 +1,4 @@
-﻿using DEM.Net.Core.Configuration;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -14,10 +12,12 @@ using System.Threading.Tasks;
 
 namespace DEM.Net.Extension.SketchFab
 {
+    /// <summary>
+    /// You will find your SketchFab token at https://sketchfab.com/settings/password
+    /// </summary>
     public partial class SketchFabApi
     {
         private readonly ILogger<SketchFabApi> _logger;
-        private readonly AppSecrets _secrets;
         private readonly HttpClient _httpClient;
         private readonly JsonSerializerSettings _jsonSerializerSettings;
         private const string SketchFabApiUrl = "https://api.sketchfab.com/v3";
@@ -45,11 +45,10 @@ namespace DEM.Net.Extension.SketchFab
         # HINTS
         # - limit the rate at which you poll for the status (once every few seconds is more than enough)
         */
-        public SketchFabApi(ILogger<SketchFabApi> logger, IOptions<AppSecrets> secrets)
+        public SketchFabApi(ILogger<SketchFabApi> logger, string sketchFabToken)
         {
             this._logger = logger;
             this._httpClient = new HttpClient();
-            this._secrets = secrets.Value;
             this._jsonSerializerSettings = new JsonSerializerSettings()
             {
                 Formatting = Formatting.None,
@@ -59,13 +58,8 @@ namespace DEM.Net.Extension.SketchFab
             _jsonSerializerSettings.Converters.Add(new StringEnumConverter());
             JsonConvert.DefaultSettings = () => _jsonSerializerSettings;
 
-            if (string.IsNullOrEmpty(_secrets.SketchFabToken) )
-            {
-                _logger.LogWarning($"SketchFabToken is not set. Ensure you have a secrets.json file with a SketchFabToken entry with your api token (see https://sketchfab.com/settings/password)");
-            }
-
         }
-              
+
         private string ShortenString(string str, int length)
         {
             return str.Substring(0, Math.Min(str.Length, length));

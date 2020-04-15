@@ -11,15 +11,15 @@ namespace DEM.Net.Extension.SketchFab
     public partial class SketchFabApi
     {
 
-        public async Task<List<Collection>> GetMyCollectionsAsync()
+        public async Task<List<Collection>> GetMyCollectionsAsync(string sketchFabToken)
         {
             try
             {
                 _logger.LogInformation($"Get collections");
 
                 HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{SketchFabApiUrl}/me/collections ");
-                httpRequestMessage.Headers.Add("Authorization", $"Token {_secrets.SketchFabToken}");
-               
+                httpRequestMessage.Headers.Add("Authorization", $"Token {sketchFabToken}");
+
                 var response = await _httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
                 _logger.LogInformation($"{nameof(GetMyCollectionsAsync)} responded {response.StatusCode}");
                 response.EnsureSuccessStatusCode();

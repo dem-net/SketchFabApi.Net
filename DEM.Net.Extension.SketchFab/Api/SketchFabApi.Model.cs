@@ -13,11 +13,11 @@ namespace DEM.Net.Extension.SketchFab
     public partial class SketchFabApi
     {
         public static string Source = "elevationapi";
-        public async Task<string> UploadModelAsync(UploadModelRequest request)
+        public async Task<string> UploadModelAsync(UploadModelRequest request, string sketchFabToken)
         {
             try
             {
-                string uuid = await UploadFileAsync(request);
+                string uuid = await UploadFileAsync(request, sketchFabToken);
 
                 return request.ModelId;
             }
@@ -28,7 +28,7 @@ namespace DEM.Net.Extension.SketchFab
             }
 
         }
-        private async Task<string> UploadFileAsync(UploadModelRequest request)
+        private async Task<string> UploadFileAsync(UploadModelRequest request, string sketchFabToken)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace DEM.Net.Extension.SketchFab
                     throw new FileNotFoundException($"File [{request.FilePath}] not found.");
                 }
                 HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, $"{SketchFabApiUrl}/models");
-                httpRequestMessage.Headers.Add("Authorization", $"Token {_secrets.SketchFabToken}");
+                httpRequestMessage.Headers.Add("Authorization", $"Token {sketchFabToken}");
                 using var form = new MultipartFormDataContent();
                 using var fileContent = new ByteArrayContent(await File.ReadAllBytesAsync(request.FilePath));
                 fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
@@ -70,7 +70,7 @@ namespace DEM.Net.Extension.SketchFab
             }
 
         }
-        public async Task UpdateModelAsync(string modelUuid, UploadModelRequest request)
+        public async Task UpdateModelAsync(string modelUuid, UploadModelRequest request, string sketchFabToken)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace DEM.Net.Extension.SketchFab
                 }
 
                 HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Patch, $"{SketchFabApiUrl}/models/{modelUuid}");
-                httpRequestMessage.Headers.Add("Authorization", $"Token {_secrets.SketchFabToken}");
+                httpRequestMessage.Headers.Add("Authorization", $"Token {sketchFabToken}");
 
                 using var form = new MultipartFormDataContent();
                 form.Headers.ContentType.MediaType = "multipart/form-data";
