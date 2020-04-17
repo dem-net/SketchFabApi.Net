@@ -10,7 +10,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace DEM.Net.Extension.SketchFab
+namespace SketchFab
 {
     /// <summary>
     /// You will find your SketchFab token at https://sketchfab.com/settings/password
@@ -45,7 +45,7 @@ namespace DEM.Net.Extension.SketchFab
         # HINTS
         # - limit the rate at which you poll for the status (once every few seconds is more than enough)
         */
-        public SketchFabApi(ILogger<SketchFabApi> logger, string sketchFabToken)
+        public SketchFabApi(ILogger<SketchFabApi> logger)
         {
             this._logger = logger;
             this._httpClient = new HttpClient();

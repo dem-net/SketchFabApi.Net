@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DEM.Net.Extension.SketchFab
+namespace SketchFab
 {
     public class SketchFabOptions
     {

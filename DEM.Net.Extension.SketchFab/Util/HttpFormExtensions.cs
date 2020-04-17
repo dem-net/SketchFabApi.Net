@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 
-namespace DEM.Net.Extension
+namespace SketchFab
 {
     public static class HttpFormExtensions
     {

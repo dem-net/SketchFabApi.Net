@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DEM.Net.Extension.SketchFab
+namespace SketchFab
 {
-   
+
     public class Avatar
     {
         public string uri { get; set; }

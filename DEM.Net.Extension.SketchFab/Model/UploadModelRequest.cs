@@ -1,10 +1,21 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace DEM.Net.Extension.SketchFab
+namespace SketchFab
 {
     public class UploadModelRequest
     {
+
+        [JsonIgnore]
+        public string Source { get; set; }
+
+        /// <summary>
+        /// Set to true when token was obtained using OAuth2 flow
+        /// Set to false if it is your token copied from your SketchFab profile
+        /// </summary>
+        [JsonIgnore]
+        public bool IsBearerToken { get; set; } = false;
+
 
         /// <summary>
         /// SketchFab uuid
@@ -30,6 +41,12 @@ namespace DEM.Net.Extension.SketchFab
         public bool IsInspectable { get; set; }
 
         /// <summary>
+        /// Sets published after it is processed
+        /// </summary>
+        [JsonProperty("isPublished")]
+        public bool IsPublished { get; set; }
+
+        /// <summary>
         /// Sets a password [pro only]
         /// </summary>
         [JsonProperty("password")]
@@ -48,24 +65,16 @@ namespace DEM.Net.Extension.SketchFab
 
 
         [JsonIgnore]
-        public List<string> Tags { get; set; } = new List<string> { "mycenaean-atlas", "elevationapi", "mycenaean", "helladic", "terrain", "greece" };
+        public List<string> Tags { get; set; } = new List<string>();
 
         [JsonProperty("tags")]
         public string TagsJson => string.Join("\n", Tags);
 
         [JsonIgnore]
-        public List<string> Categories { get; set; } = new List<string> { "cultural-heritage-history", "places-travel" };
+        public List<string> Categories { get; set; } = new List<string>();
 
         [JsonProperty("categories")]
         public string CategoriesJson => string.Join("\n", Categories);
-
-        /// <summary>
-        /// Sets published after it is processed
-        /// </summary>
-        [JsonProperty("isPublished")]
-        public bool IsPublished { get; set; }
-
-
 
         [JsonProperty("description")]
         public string Description { get; set; }

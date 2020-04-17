@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 using Newtonsoft.Json.Converters;
 
-namespace DEM.Net.Extension.SketchFab
+namespace SketchFab
 {
     public class ModelOptions
     {
@@ -11,7 +11,7 @@ namespace DEM.Net.Extension.SketchFab
         /// Defines the background used. Either a color, a background (uid), an environment (uid) or transparent. eg: {"color": "#ffffff"}, {"environment": "uid"}, {"image": "uid"} or {"transparent": 1}
         /// <see cref="SkecthFabEnvironment"/>
         /// </summary>
-        public ModelOptionsBackground Background { get; set; }
+        public ModelOptionsBackground Background { get; set; } = SkecthFabEnvironment.Studio;
         public string Orientation { get; set; }// = "{\"axis\": [1, 1, 0], \"angle\": 34}";
 
 
