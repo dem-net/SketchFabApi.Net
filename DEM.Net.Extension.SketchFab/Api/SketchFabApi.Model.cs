@@ -12,13 +12,13 @@ namespace SketchFab
 {
     public partial class SketchFabApi
     {
-        public async Task<string> UploadModelAsync(UploadModelRequest request, string sketchFabToken)
+        public async Task<SketchFabUploadResponse> UploadModelAsync(UploadModelRequest request, string sketchFabToken)
         {
             try
             {
-                string uuid = await UploadFileAsync(request, sketchFabToken);
+                SketchFabUploadResponse response = await UploadFileAsync(request, sketchFabToken);
 
-                return request.ModelId;
+                return response;
             }
             catch (Exception ex)
             {
@@ -27,8 +27,9 @@ namespace SketchFab
             }
 
         }
-        private async Task<string> UploadFileAsync(UploadModelRequest request, string sketchFabToken)
+        private async Task<SketchFabUploadResponse> UploadFileAsync(UploadModelRequest request, string sketchFabToken)
         {
+            SketchFabUploadResponse sfResponse = new SketchFabUploadResponse();
             try
             {
                 _logger.LogInformation($"Uploading model [{request.FilePath}].");
@@ -63,11 +64,24 @@ namespace SketchFab
 
                 var response = await _httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
                 _logger.LogInformation($"{nameof(UploadFileAsync)} responded {response.StatusCode}");
-                response.EnsureSuccessStatusCode();
-                string uuid = response.Headers.GetValues("Location").FirstOrDefault();
-                request.ModelId = uuid;
-                _logger.LogInformation("Uploading is complete. Model uuid is " + uuid);
-                return uuid;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var uuid = response.Headers.GetValues("Location").FirstOrDefault();
+                    sfResponse.ModelId = uuid;
+                    sfResponse.StatusCode = response.StatusCode;
+                    sfResponse.Message = response.ReasonPhrase;
+                    request.ModelId = uuid;
+                    _logger.LogInformation("Uploading is complete. Model uuid is " + uuid);
+                }
+                else
+                {
+                    _logger.LogError($"Error in SketchFab upload: {response.StatusCode} {response.ReasonPhrase}");
+                    sfResponse.StatusCode = response.StatusCode;
+                    sfResponse.Message = response.ReasonPhrase;
+                }
+
+                return sfResponse;
             }
             catch (Exception ex)
             {
