@@ -22,6 +22,11 @@ namespace SketchFab
             }
         }
 
+        public static void AddAuthorizationHeader(this HttpRequestMessage message, string token, TokenType tokenType)
+        {
+            message.Headers.Add("Authorization", $"{tokenType.ToString()} {token}");
+        }
+
 
     }
 }

@@ -1,11 +1,35 @@
-﻿using Microsoft.Extensions.Logging;
+﻿//
+// SketchFabApi.Model.cs
+//
+// Author:
+//       Xavier Fischer 2020-4
+//
+// Copyright (c) 2020 Xavier Fischer
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SketchFab
@@ -43,7 +67,7 @@ namespace SketchFab
                     throw new FileNotFoundException($"File [{request.FilePath}] not found.");
                 }
                 HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, $"{SketchFabApiUrl}/models");
-                httpRequestMessage.Headers.Add("Authorization", $"{GetAuthPrefix(request)} {sketchFabToken}");
+                httpRequestMessage.AddAuthorizationHeader(sketchFabToken, request.TokenType);
                 using var form = new MultipartFormDataContent();
                 using var fileContent = new ByteArrayContent(await File.ReadAllBytesAsync(request.FilePath));
                 fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
@@ -93,7 +117,7 @@ namespace SketchFab
 
         private string GetAuthPrefix(UploadModelRequest request)
         {
-            return request.IsBearerToken ? "Bearer" : "Token";
+            return request.TokenType.ToString();
         }
 
         public async Task UpdateModelAsync(string modelUuid, UploadModelRequest request, string sketchFabToken)
@@ -107,7 +131,7 @@ namespace SketchFab
                 }
 
                 HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Patch, $"{SketchFabApiUrl}/models/{modelUuid}");
-                httpRequestMessage.Headers.Add("Authorization", $"{GetAuthPrefix(request)} {sketchFabToken}");
+                httpRequestMessage.AddAuthorizationHeader(sketchFabToken, request.TokenType);
 
                 using var form = new MultipartFormDataContent();
                 form.Headers.ContentType.MediaType = "multipart/form-data";

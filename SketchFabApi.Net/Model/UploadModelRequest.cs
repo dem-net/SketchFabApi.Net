@@ -10,11 +10,11 @@ namespace SketchFab
         public string Source { get; set; }
 
         /// <summary>
-        /// Set to true when token was obtained using OAuth2 flow
-        /// Set to false if it is your token copied from your SketchFab profile
+        /// Set to Bearer when token was obtained using OAuth2 flow
+        /// Set to Token if it is your token (API Key) copied from your SketchFab profile
         /// </summary>
         [JsonIgnore]
-        public bool IsBearerToken { get; set; } = false;
+        public TokenType TokenType { get; set; } = TokenType.Token;
 
 
         /// <summary>

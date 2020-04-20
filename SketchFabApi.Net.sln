@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SketchFabApi.Net", "SketchFabApi.Net\SketchFabApi.Net.csproj", "{F09292C2-15FB-4ED1-AAE2-E4D891E20572}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SketchFabApi.Samples", "SketchFabApi.Samples\SketchFabApi.Samples.csproj", "{4D8A2534-8E69-485D-9582-88C949EE2CFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F09292C2-15FB-4ED1-AAE2-E4D891E20572}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F09292C2-15FB-4ED1-AAE2-E4D891E20572}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F09292C2-15FB-4ED1-AAE2-E4D891E20572}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D8A2534-8E69-485D-9582-88C949EE2CFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D8A2534-8E69-485D-9582-88C949EE2CFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D8A2534-8E69-485D-9582-88C949EE2CFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D8A2534-8E69-485D-9582-88C949EE2CFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

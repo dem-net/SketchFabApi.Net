@@ -1,5 +1,5 @@
 ﻿//
-// SketchFabApi.Collections.cs
+// SketchFabApi.Account.cs
 //
 // Author:
 //       Xavier Fischer 2020-4
@@ -23,48 +23,43 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using SketchFab;
 
 namespace SketchFab
 {
-
-
     public partial class SketchFabApi
     {
-
-        public async Task<List<Collection>> GetMyCollectionsAsync(string sketchFabToken, TokenType tokenType)
+        public async Task<Account> GetMyAccount(string sketchFabToken, TokenType tokenType)
         {
             try
             {
-                _logger.LogInformation($"Get collections");
+                _logger.LogInformation($"Get Account");
 
-                HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{SketchFabApiUrl}/me/collections ");
+                HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{SketchFabApiUrl}/me/account");
                 httpRequestMessage.AddAuthorizationHeader(sketchFabToken, tokenType);
 
                 var response = await _httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
-                _logger.LogInformation($"{nameof(GetMyCollectionsAsync)} responded {response.StatusCode}");
+                _logger.LogInformation($"{nameof(GetMyAccount)} responded {response.StatusCode}");
                 response.EnsureSuccessStatusCode();
 
-                var collectionsJson = await response.Content.ReadAsStringAsync();
+                var jsonPayload = await response.Content.ReadAsStringAsync();
 
-                var collections = JsonConvert.DeserializeObject<PagedResult<Collection>>(collectionsJson);
+                var account = JsonConvert.DeserializeObject<Account>(jsonPayload);
 
-                _logger.LogInformation($"GetMyCollectionsAsync got {collections.results.Count} collection(s).");
-
-                return collections.results;
+                return account;
             }
             catch (Exception ex)
             {
-                _logger.LogError($"SketchFab upload error: {ex.Message}");
+                _logger.LogError($"SketchFab get account error: {ex.Message}");
                 throw;
             }
 
         }
-
     }
 }

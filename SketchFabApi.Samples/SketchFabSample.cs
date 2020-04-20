@@ -1,5 +1,5 @@
 ﻿//
-// SketchFabApi.Collections.cs
+// SketchFabSample.cs
 //
 // Author:
 //       Xavier Fischer 2020-4
@@ -23,48 +23,40 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using SketchFab;
 
-namespace SketchFab
+namespace SketchFabApi.Samples
 {
-
-
-    public partial class SketchFabApi
+    public class SketchFabSample
     {
+        private readonly ILogger<SketchFabSample> logger;
+        private readonly SketchFab.SketchFabApi sketchFabApi;
 
-        public async Task<List<Collection>> GetMyCollectionsAsync(string sketchFabToken, TokenType tokenType)
+        public SketchFabSample(ILogger<SketchFabSample> logger, SketchFab.SketchFabApi sketchFabApi)
+        {
+            this.logger = logger;
+            this.sketchFabApi = sketchFabApi;
+        }
+
+        internal async Task Run()
         {
             try
             {
-                _logger.LogInformation($"Get collections");
+                string userToken = "sA3F05WBGIj1IkQAglju4IhA1oRP4Y";
+                TokenType tokenType = TokenType.Bearer;
 
-                HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{SketchFabApiUrl}/me/collections ");
-                httpRequestMessage.AddAuthorizationHeader(sketchFabToken, tokenType);
+                var account = await sketchFabApi.GetMyAccount(userToken, tokenType);
 
-                var response = await _httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
-                _logger.LogInformation($"{nameof(GetMyCollectionsAsync)} responded {response.StatusCode}");
-                response.EnsureSuccessStatusCode();
-
-                var collectionsJson = await response.Content.ReadAsStringAsync();
-
-                var collections = JsonConvert.DeserializeObject<PagedResult<Collection>>(collectionsJson);
-
-                _logger.LogInformation($"GetMyCollectionsAsync got {collections.results.Count} collection(s).");
-
-                return collections.results;
+                var uploadLimit = account.uploadSizeLimit;
+                logger.LogInformation($"Upload size limit for {account.account}: {uploadLimit}");
             }
             catch (Exception ex)
             {
-                _logger.LogError($"SketchFab upload error: {ex.Message}");
-                throw;
+                logger.LogError(ex, "Error: " + ex.Message);
             }
-
         }
-
     }
 }
