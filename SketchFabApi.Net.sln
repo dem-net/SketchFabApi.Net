@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DEM.Net.Extension.SketchFab", "DEM.Net.Extension.SketchFab\DEM.Net.Extension.SketchFab.csproj", "{1CEE0E71-9A0D-47E0-83BD-0FE61DB567F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SketchFabApi.Net", "SketchFabApi.Net\SketchFabApi.Net.csproj", "{F09292C2-15FB-4ED1-AAE2-E4D891E20572}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1CEE0E71-9A0D-47E0-83BD-0FE61DB567F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1CEE0E71-9A0D-47E0-83BD-0FE61DB567F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1CEE0E71-9A0D-47E0-83BD-0FE61DB567F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1CEE0E71-9A0D-47E0-83BD-0FE61DB567F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F09292C2-15FB-4ED1-AAE2-E4D891E20572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F09292C2-15FB-4ED1-AAE2-E4D891E20572}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F09292C2-15FB-4ED1-AAE2-E4D891E20572}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F09292C2-15FB-4ED1-AAE2-E4D891E20572}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
