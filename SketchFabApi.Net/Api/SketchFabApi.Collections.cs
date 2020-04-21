@@ -27,6 +27,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -61,6 +62,38 @@ namespace SketchFab
             catch (Exception ex)
             {
                 _logger.LogError($"SketchFab upload error: {ex.Message}");
+                throw;
+            }
+
+        }
+
+        public async Task AddModelToCollection(string collectionId, string sketchFabToken, TokenType tokenType, params string[] modelIds)
+        {
+            try
+            {
+                _logger.LogInformation($"Add model(s) to collection");
+                if (modelIds == null || modelIds.Length == 0) throw new ArgumentNullException(nameof(modelIds));
+                if (string.IsNullOrWhiteSpace(collectionId)) throw new ArgumentNullException(nameof(collectionId));
+
+                HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, $"{SketchFabApiUrl}/collections/{collectionId}/models");
+                httpRequestMessage.AddAuthorizationHeader(sketchFabToken, tokenType);
+
+                using var form = new MultipartFormDataContent();
+                form.Headers.ContentType.MediaType = "multipart/form-data";
+
+                form.AddRange(modelIds, "models");
+
+                httpRequestMessage.Content = form;
+
+                var response = await _httpClient.SendAsync(httpRequestMessage);
+
+                _logger.LogInformation($"{nameof(AddModelToCollection)} responded {response.StatusCode}");
+                response.EnsureSuccessStatusCode();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"SketchFab add model(s) to collection error: {ex.Message}");
                 throw;
             }
 

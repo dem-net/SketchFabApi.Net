@@ -50,10 +50,43 @@ namespace SketchFabApi.Samples
         {
             try
             {
-                string userToken = "sA3F05WBGIj1IkQAglju4IhA1oRP4Y";
-                TokenType tokenType = TokenType.Bearer;
+                // Test get my account
+                await GetAccount(options.BearerToken, TokenType.Bearer);
 
-                var account = await sketchFabApi.GetMyAccount(userToken, tokenType);
+                // Test add to collection
+                await AddModelsToCollection(collectionId: "ef4914cce6a842589fecd78ac206a09b", options.BearerToken, TokenType.Bearer, modelIds: "f9d96fca765044f6a0e83f24bd9dcaa0");
+
+
+
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error: " + ex.Message);
+            }
+        }
+
+        private async Task AddModelsToCollection(string collectionId, string bearerToken, TokenType bearer, params string[] modelIds)
+        {
+            try
+            {
+                logger.LogInformation($"Add models to collection");
+
+                await sketchFabApi.AddModelToCollection(collectionId, bearerToken, bearer, modelIds);
+
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error: " + ex.Message);
+            }
+        }
+
+        private async Task GetAccount(string token, TokenType tokenType)
+        {
+            try
+            {
+                logger.LogInformation($"Getting account info...");
+
+                var account = await sketchFabApi.GetMyAccount(token, tokenType);
 
                 var uploadLimit = account.uploadSizeLimit;
                 logger.LogInformation($"Upload size limit for {account.account}: {uploadLimit}");

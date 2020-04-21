@@ -12,7 +12,7 @@ namespace SketchFab
         }
 
 
-        public static void AddRange(this MultipartFormDataContent form, List<string> values, string name)
+        public static void AddRange(this MultipartFormDataContent form, IEnumerable<string> values, string name)
         {
             if (values == null) return;
 
