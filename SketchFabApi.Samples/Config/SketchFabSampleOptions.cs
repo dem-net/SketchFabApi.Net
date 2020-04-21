@@ -1,5 +1,5 @@
 ﻿//
-// SketchFabSample.cs
+// SketchFabSampleOptions.cs
 //
 // Author:
 //       Xavier Fischer 2020-4
@@ -24,44 +24,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using SketchFab;
-
 namespace SketchFabApi.Samples
 {
-    public class SketchFabSample
+    public class SketchFabSampleOptions
     {
-        private readonly ILogger<SketchFabSample> logger;
-        private readonly SketchFab.SketchFabApi sketchFabApi;
-        private readonly SketchFabSampleOptions options;
+        public string BearerToken { get; set; }
 
-        public SketchFabSample(ILogger<SketchFabSample> logger
-            , IOptions<SketchFabSampleOptions> options
-            , SketchFab.SketchFabApi sketchFabApi)
+        public SketchFabSampleOptions()
         {
-            this.logger = logger;
-            this.sketchFabApi = sketchFabApi;
-            this.options = options.Value;
-        }
-
-        internal async Task Run()
-        {
-            try
-            {
-                string userToken = "sA3F05WBGIj1IkQAglju4IhA1oRP4Y";
-                TokenType tokenType = TokenType.Bearer;
-
-                var account = await sketchFabApi.GetMyAccount(userToken, tokenType);
-
-                var uploadLimit = account.uploadSizeLimit;
-                logger.LogInformation($"Upload size limit for {account.account}: {uploadLimit}");
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "Error: " + ex.Message);
-            }
         }
     }
 }

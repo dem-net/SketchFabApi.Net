@@ -39,10 +39,10 @@ namespace SketchFabApi.Samples
 
                 var config = new ConfigurationBuilder()
                 .SetBasePath(AppContext.BaseDirectory)
-                .AddJsonFile("appsettings.json", optional: true)
-                //.AddJsonFile($"appsettings.{context.HostingEnvironment.EnvironmentName}.json", optional: true)
+                .AddJsonFile("appsettings.json", optional: false)
                 .AddJsonFile("secrets.json", optional: true, reloadOnChange: false)
                 .Build();
+
 
                 return config;
             }
@@ -72,6 +72,9 @@ namespace SketchFabApi.Samples
                // Comment this line to see all internal DEM.Net logs
                //options.AddFilter<ConsoleLoggerProvider>("DEM.Net", LogLevel.Information);
            });
+
+            services.AddOptions();
+            services.Configure<SketchFabSampleOptions>(config.GetSection(nameof(SketchFabSampleOptions)));
 
 
             services.AddScoped<SketchFab.SketchFabApi>();
