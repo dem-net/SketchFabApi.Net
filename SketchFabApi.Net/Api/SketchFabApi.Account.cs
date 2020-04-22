@@ -35,7 +35,7 @@ namespace SketchFab
 {
     public partial class SketchFabApi
     {
-        public async Task<Account> GetMyAccount(string sketchFabToken, TokenType tokenType)
+        public async Task<Account> GetMyAccountAsync(string sketchFabToken, TokenType tokenType)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace SketchFab
                 httpRequestMessage.AddAuthorizationHeader(sketchFabToken, tokenType);
 
                 var response = await _httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
-                _logger.LogInformation($"{nameof(GetMyAccount)} responded {response.StatusCode}");
+                _logger.LogInformation($"{nameof(GetMyAccountAsync)} responded {response.StatusCode}");
                 response.EnsureSuccessStatusCode();
 
                 var jsonPayload = await response.Content.ReadAsStringAsync();

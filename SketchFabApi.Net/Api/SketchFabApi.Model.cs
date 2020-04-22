@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Linq;
@@ -37,21 +38,6 @@ namespace SketchFab
     public partial class SketchFabApi
     {
         public async Task<SketchFabUploadResponse> UploadModelAsync(UploadModelRequest request, string sketchFabToken)
-        {
-            try
-            {
-                SketchFabUploadResponse response = await UploadFileAsync(request, sketchFabToken);
-
-                return response;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"SketchFab upload error: {ex.Message}");
-                throw;
-            }
-
-        }
-        private async Task<SketchFabUploadResponse> UploadFileAsync(UploadModelRequest request, string sketchFabToken)
         {
             SketchFabUploadResponse sfResponse = new SketchFabUploadResponse();
             try
@@ -87,7 +73,7 @@ namespace SketchFab
 
 
                 var response = await _httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
-                _logger.LogInformation($"{nameof(UploadFileAsync)} responded {response.StatusCode}");
+                _logger.LogInformation($"{nameof(UploadModelAsync)} responded {response.StatusCode}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -120,17 +106,17 @@ namespace SketchFab
             return request.TokenType.ToString();
         }
 
-        public async Task UpdateModelAsync(string modelUuid, UploadModelRequest request, string sketchFabToken)
+        public async Task UpdateModelAsync(string modelId, UploadModelRequest request, string sketchFabToken)
         {
             try
             {
                 _logger.LogInformation($"Updating model [{request.Name}].");
-                if (string.IsNullOrWhiteSpace(modelUuid))
+                if (string.IsNullOrWhiteSpace(modelId))
                 {
-                    throw new ArgumentNullException(nameof(modelUuid));
+                    throw new ArgumentNullException(nameof(modelId));
                 }
 
-                HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Patch, $"{SketchFabApiUrl}/models/{modelUuid}");
+                HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Patch, $"{SketchFabApiUrl}/models/{modelId}");
                 httpRequestMessage.AddAuthorizationHeader(sketchFabToken, request.TokenType);
 
                 using var form = new MultipartFormDataContent();
@@ -152,6 +138,51 @@ namespace SketchFab
                 throw;
             }
 
+        }
+
+        public async Task<Model> GetModelAsync(string modelId)
+        {
+            try
+            {
+                _logger.LogInformation($"Get model");
+
+                if (string.IsNullOrWhiteSpace(modelId)) throw new ArgumentNullException(nameof(modelId));
+
+                HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{SketchFabApiUrl}/models/{modelId}");
+
+                var response = await _httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
+                _logger.LogInformation($"{nameof(GetModelAsync)} responded {response.StatusCode}");
+                response.EnsureSuccessStatusCode();
+
+                var json = await response.Content.ReadAsStringAsync();
+
+                var model = JsonConvert.DeserializeObject<Model>(json);
+
+                _logger.LogInformation($"GetModelAsync OK");
+
+                return model;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"SketchFab GetModelAsync error: {ex.Message}");
+                throw;
+            }
+
+        }
+
+        public async Task<bool> IsReadyAsync(string modelId)
+        {
+            try
+            {
+                var model = await this.GetModelAsync(modelId);
+
+                return model.IsReady();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"SketchFab IsReadyAsync error: {ex.Message}");
+                throw;
+            }
         }
     }
 }

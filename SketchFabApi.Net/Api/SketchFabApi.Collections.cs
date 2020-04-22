@@ -44,7 +44,7 @@ namespace SketchFab
             {
                 _logger.LogInformation($"Get collections");
 
-                HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{SketchFabApiUrl}/me/collections ");
+                HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{SketchFabApiUrl}/me/collections");
                 httpRequestMessage.AddAuthorizationHeader(sketchFabToken, tokenType);
 
                 var response = await _httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
@@ -67,7 +67,7 @@ namespace SketchFab
 
         }
 
-        public async Task AddModelToCollection(string collectionId, string sketchFabToken, TokenType tokenType, params string[] modelIds)
+        public async Task AddModelToCollectionAsync(string collectionId, string sketchFabToken, TokenType tokenType, params string[] modelIds)
         {
             try
             {
@@ -87,7 +87,7 @@ namespace SketchFab
 
                 var response = await _httpClient.SendAsync(httpRequestMessage);
 
-                _logger.LogInformation($"{nameof(AddModelToCollection)} responded {response.StatusCode}");
+                _logger.LogInformation($"{nameof(AddModelToCollectionAsync)} responded {response.StatusCode}");
                 response.EnsureSuccessStatusCode();
 
             }

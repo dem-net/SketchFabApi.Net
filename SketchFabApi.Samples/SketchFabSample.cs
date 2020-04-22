@@ -50,11 +50,15 @@ namespace SketchFabApi.Samples
         {
             try
             {
+
+                // Test get model
+                var model = await sketchFabApi.GetModelAsync("f934cb5207624d14841f19ca85b4ea2c");
+
                 // Test get my account
-                await GetAccount(options.BearerToken, TokenType.Bearer);
+                await GetAccountAsync(options.BearerToken, TokenType.Bearer);
 
                 // Test add to collection
-                await AddModelsToCollection(collectionId: "ef4914cce6a842589fecd78ac206a09b", options.BearerToken, TokenType.Bearer, modelIds: "f9d96fca765044f6a0e83f24bd9dcaa0");
+                await AddModelsToCollectionAsync(collectionId: "ef4914cce6a842589fecd78ac206a09b", options.BearerToken, TokenType.Bearer, modelIds: "f9d96fca765044f6a0e83f24bd9dcaa0");
 
 
 
@@ -65,13 +69,13 @@ namespace SketchFabApi.Samples
             }
         }
 
-        private async Task AddModelsToCollection(string collectionId, string bearerToken, TokenType bearer, params string[] modelIds)
+        private async Task AddModelsToCollectionAsync(string collectionId, string bearerToken, TokenType bearer, params string[] modelIds)
         {
             try
             {
                 logger.LogInformation($"Add models to collection");
 
-                await sketchFabApi.AddModelToCollection(collectionId, bearerToken, bearer, modelIds);
+                await sketchFabApi.AddModelToCollectionAsync(collectionId, bearerToken, bearer, modelIds);
 
             }
             catch (Exception ex)
@@ -80,13 +84,13 @@ namespace SketchFabApi.Samples
             }
         }
 
-        private async Task GetAccount(string token, TokenType tokenType)
+        private async Task GetAccountAsync(string token, TokenType tokenType)
         {
             try
             {
                 logger.LogInformation($"Getting account info...");
 
-                var account = await sketchFabApi.GetMyAccount(token, tokenType);
+                var account = await sketchFabApi.GetMyAccountAsync(token, tokenType);
 
                 var uploadLimit = account.uploadSizeLimit;
                 logger.LogInformation($"Upload size limit for {account.account}: {uploadLimit}");
