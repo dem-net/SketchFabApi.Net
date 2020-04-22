@@ -149,7 +149,7 @@ namespace SketchFab
                 if (string.IsNullOrWhiteSpace(modelId)) throw new ArgumentNullException(nameof(modelId));
 
                 HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{SketchFabApiUrl}/models/{modelId}");
-
+                httpRequestMessage.Headers.CacheControl = new CacheControlHeaderValue() { NoCache = true };
                 var response = await _httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
                 _logger.LogInformation($"{nameof(GetModelAsync)} responded {response.StatusCode}");
                 response.EnsureSuccessStatusCode();
