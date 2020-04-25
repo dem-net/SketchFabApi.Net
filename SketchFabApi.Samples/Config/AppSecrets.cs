@@ -26,12 +26,9 @@
 using System;
 namespace SketchFabApi.Samples
 {
-    public class SketchFabSampleOptions
+    public class AppSecrets
     {
-        public string BearerToken { get; set; }
+        public string SketchFabToken { get; set; }
 
-        public SketchFabSampleOptions()
-        {
-        }
     }
 }

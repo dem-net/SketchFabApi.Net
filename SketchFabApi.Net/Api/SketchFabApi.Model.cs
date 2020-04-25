@@ -27,6 +27,7 @@
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -169,6 +170,59 @@ namespace SketchFab
             }
 
         }
+
+        public async IAsyncEnumerable<Model> GetMyModelsAsync(string sketchFabToken, TokenType tokenType)
+        {
+            _logger.LogInformation($"Get my models");
+
+            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{SketchFabApiUrl}/me/models");
+            httpRequestMessage.AddAuthorizationHeader(sketchFabToken, tokenType);
+
+            await foreach (var result in GetPagedResultAsync<Model>(httpRequestMessage))
+            {
+                yield return result;
+            }
+
+        }
+
+        public async IAsyncEnumerable<T> GetPagedResultAsync<T>(HttpRequestMessage httpRequestMessage)
+        {
+            int numResults = 0, numPages = 0;
+
+            var response = await _httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
+            response.EnsureSuccessStatusCode();
+            var json = await response.Content.ReadAsStringAsync();
+
+            var pagedResult = JsonConvert.DeserializeObject<PagedResult<T>>(json);
+
+            numPages++;
+            foreach (var model in pagedResult.results)
+            {
+                numResults++;
+                yield return model;
+            }
+            while (pagedResult.next != null)
+            {
+                numPages++;
+                var nextMessage = httpRequestMessage.Clone();
+                nextMessage.RequestUri = new Uri(pagedResult.next);
+                response = await _httpClient.SendAsync(nextMessage, HttpCompletionOption.ResponseContentRead);
+
+                json = await response.Content.ReadAsStringAsync();
+                pagedResult = JsonConvert.DeserializeObject<PagedResult<T>>(json);
+                foreach (var model in pagedResult.results)
+                {
+                    numResults++;
+                    yield return model;
+                }
+            }
+
+            _logger.LogInformation($"{nameof(GetPagedResultAsync)}<{nameof(T)}> returned {numResults} result(s) in {numPages} page(s)");
+
+
+        }
+
+       
 
         public async Task<bool> IsReadyAsync(string modelId)
         {

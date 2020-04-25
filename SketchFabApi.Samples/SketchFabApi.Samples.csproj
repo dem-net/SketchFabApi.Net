@@ -16,9 +16,6 @@
         <ProjectReference Include="..\SketchFabApi.Net\SketchFabApi.Net.csproj" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Config\" />
-    </ItemGroup>
-    <ItemGroup>
       <None Update="appsettings.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>

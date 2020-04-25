@@ -24,6 +24,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -35,15 +37,15 @@ namespace SketchFabApi.Samples
     {
         private readonly ILogger<SketchFabSample> logger;
         private readonly SketchFab.SketchFabApi sketchFabApi;
-        private readonly SketchFabSampleOptions options;
+        private readonly AppSecrets secrets;
 
         public SketchFabSample(ILogger<SketchFabSample> logger
-            , IOptions<SketchFabSampleOptions> options
+            , IOptions<AppSecrets> secrets
             , SketchFab.SketchFabApi sketchFabApi)
         {
             this.logger = logger;
             this.sketchFabApi = sketchFabApi;
-            this.options = options.Value;
+            this.secrets = secrets.Value;
         }
 
         internal async Task Run()
@@ -51,14 +53,20 @@ namespace SketchFabApi.Samples
             try
             {
 
+                List<Model> myModels = new List<Model>();
+                await foreach(var myModel in sketchFabApi.GetMyModelsAsync(secrets.SketchFabToken, TokenType.Token))
+                {
+                    myModels.Add(myModel);
+                }
+
                 // Test get model
                 var model = await sketchFabApi.GetModelAsync("f934cb5207624d14841f19ca85b4ea2c");
 
                 // Test get my account
-                await GetAccountAsync(options.BearerToken, TokenType.Bearer);
+                await GetAccountAsync(secrets.SketchFabToken, TokenType.Bearer);
 
                 // Test add to collection
-                await AddModelsToCollectionAsync(collectionId: "ef4914cce6a842589fecd78ac206a09b", options.BearerToken, TokenType.Bearer, modelIds: "f9d96fca765044f6a0e83f24bd9dcaa0");
+                await AddModelsToCollectionAsync(collectionId: "ef4914cce6a842589fecd78ac206a09b", secrets.SketchFabToken, TokenType.Bearer, modelIds: "f9d96fca765044f6a0e83f24bd9dcaa0");
 
 
 
