@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 
 namespace SketchFab
@@ -16,9 +17,16 @@ namespace SketchFab
         {
             if (values == null) return;
 
-            foreach (var value in values)
+            if (values.Any())
             {
-                form.Add(new StringContent(value), name);
+                foreach (var value in values)
+                {
+                    form.Add(new StringContent(value), name);
+                }
+            }
+            else
+            {
+                form.Add(new StringContent(string.Empty), name);
             }
         }
 

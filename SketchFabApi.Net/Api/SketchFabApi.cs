@@ -98,7 +98,11 @@ namespace SketchFab
             form.Add(new StringContent(JsonConvert.SerializeObject(request.Options)), "options");
             form.AddRange(request.Tags, "tags");
             form.AddRange(request.Categories, "categories");
-
+        }
+        private void AddCommonModelFields(MultipartFormDataContent form, UpdateModelRequest request)
+        {
+            form.AddRange(request.Tags, "tags");
+            form.AddRange(request.Categories, "categories");
         }
 
     }

@@ -53,10 +53,32 @@ namespace SketchFabApi.Samples
             try
             {
 
-                List<Model> myModels = new List<Model>();
+                HashSet<string> allowedTags = new HashSet<string>(new string[] { "mycenaean-atlas", "elevationapi" });
+                int numModelsUpdated = 0;
+                int numModelsSkipped = 0;
                 await foreach(var myModel in sketchFabApi.GetMyModelsAsync(secrets.SketchFabToken, TokenType.Token))
                 {
-                    myModels.Add(myModel);
+                    // If model has categories or forbidden tags, update it
+                    if (myModel.categories.Any() || myModel.tags.Any(t => !allowedTags.Contains(t.name)))
+                    {
+                        await Task.Delay(5000); // avoid HTTP 429 too many requests
+
+                        UpdateModelRequest uploadRequest = new UpdateModelRequest()
+                        {
+                            Categories = new List<string>(),
+                            Tags = allowedTags.ToList(),
+                            ModelId = myModel.uid,
+                        };
+                        await sketchFabApi.UpdateModelAsync(myModel.uid, uploadRequest, secrets.SketchFabToken, TokenType.Token);
+                        numModelsUpdated++;
+                    }
+                    else
+                    {
+                        numModelsSkipped++;
+                    }
+
+
+                    logger.LogInformation($"Update models progress: {numModelsUpdated} updated, {numModelsSkipped} skipped");
                 }
 
                 // Test get model

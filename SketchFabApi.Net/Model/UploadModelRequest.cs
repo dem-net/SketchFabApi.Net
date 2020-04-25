@@ -87,4 +87,30 @@ namespace SketchFab
 
 
     }
+
+    public class UpdateModelRequest
+    {
+
+        /// <summary>
+        /// SketchFab uuid
+        /// </summary>
+        [JsonProperty("uid")]
+        public string ModelId { get; set; }
+
+
+        [JsonIgnore]
+        public List<string> Tags { get; set; } = new List<string>();
+
+        [JsonProperty("tags")]
+        public string TagsJson => string.Join("\n", Tags);
+
+        [JsonIgnore]
+        public List<string> Categories { get; set; } = new List<string>();
+
+        [JsonProperty("categories")]
+        public string CategoriesJson => string.Join("\n", Categories);
+
+       
+
+    }
 }

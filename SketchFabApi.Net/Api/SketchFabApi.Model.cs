@@ -107,18 +107,18 @@ namespace SketchFab
             return request.TokenType.ToString();
         }
 
-        public async Task UpdateModelAsync(string modelId, UploadModelRequest request, string sketchFabToken)
+        public async Task UpdateModelAsync(string modelId, UpdateModelRequest request, string sketchFabToken, TokenType tokenType)
         {
             try
             {
-                _logger.LogInformation($"Updating model [{request.Name}].");
+                _logger.LogInformation($"Updating model [{modelId}].");
                 if (string.IsNullOrWhiteSpace(modelId))
                 {
                     throw new ArgumentNullException(nameof(modelId));
                 }
 
                 HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Patch, $"{SketchFabApiUrl}/models/{modelId}");
-                httpRequestMessage.AddAuthorizationHeader(sketchFabToken, request.TokenType);
+                httpRequestMessage.AddAuthorizationHeader(sketchFabToken, tokenType);
 
                 using var form = new MultipartFormDataContent();
                 form.Headers.ContentType.MediaType = "multipart/form-data";
