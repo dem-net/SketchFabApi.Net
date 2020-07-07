@@ -73,7 +73,8 @@ namespace SketchFab
                 httpRequestMessage.Content = form;
 
 
-                var response = await _httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
+                var httpClient = _httpClientFactory.CreateClient();
+                var response = await httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
                 _logger.LogInformation($"{nameof(UploadModelAsync)} responded {response.StatusCode}");
 
                 if (response.IsSuccessStatusCode)
@@ -127,7 +128,8 @@ namespace SketchFab
 
                 httpRequestMessage.Content = form;
 
-                var response = await _httpClient.SendAsync(httpRequestMessage);
+                var httpClient = _httpClientFactory.CreateClient();
+                var response = await httpClient.SendAsync(httpRequestMessage);
 
                 _logger.LogInformation($"{nameof(UpdateModelAsync)} responded {response.StatusCode}");
                 response.EnsureSuccessStatusCode();
@@ -151,7 +153,9 @@ namespace SketchFab
 
                 HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{SketchFabApiUrl}/models/{modelId}");
                 httpRequestMessage.Headers.CacheControl = new CacheControlHeaderValue() { NoCache = true };
-                var response = await _httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
+
+                var httpClient = _httpClientFactory.CreateClient();
+                var response = await httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
                 _logger.LogInformation($"{nameof(GetModelAsync)} responded {response.StatusCode}");
                 response.EnsureSuccessStatusCode();
 
@@ -189,7 +193,8 @@ namespace SketchFab
         {
             int numResults = 0, numPages = 0;
 
-            var response = await _httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
+            var httpClient = _httpClientFactory.CreateClient();
+            var response = await httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
             response.EnsureSuccessStatusCode();
             var json = await response.Content.ReadAsStringAsync();
 
@@ -206,7 +211,7 @@ namespace SketchFab
                 numPages++;
                 var nextMessage = httpRequestMessage.Clone();
                 nextMessage.RequestUri = new Uri(pagedResult.next);
-                response = await _httpClient.SendAsync(nextMessage, HttpCompletionOption.ResponseContentRead);
+                response = await httpClient.SendAsync(nextMessage, HttpCompletionOption.ResponseContentRead);
 
                 json = await response.Content.ReadAsStringAsync();
                 pagedResult = JsonConvert.DeserializeObject<PagedResult<T>>(json);

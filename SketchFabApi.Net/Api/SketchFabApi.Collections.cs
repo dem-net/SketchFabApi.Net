@@ -46,8 +46,9 @@ namespace SketchFab
 
                 HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{SketchFabApiUrl}/me/collections");
                 httpRequestMessage.AddAuthorizationHeader(sketchFabToken, tokenType);
-
-                var response = await _httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
+                
+                var httpClient = _httpClientFactory.CreateClient();
+                var response = await httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
                 _logger.LogInformation($"{nameof(GetMyCollectionsAsync)} responded {response.StatusCode}");
                 response.EnsureSuccessStatusCode();
 
@@ -85,7 +86,8 @@ namespace SketchFab
 
                 httpRequestMessage.Content = form;
 
-                var response = await _httpClient.SendAsync(httpRequestMessage);
+                var httpClient = _httpClientFactory.CreateClient();
+                var response = await httpClient.SendAsync(httpRequestMessage);
 
                 _logger.LogInformation($"{nameof(AddModelToCollectionAsync)} responded {response.StatusCode}");
                 response.EnsureSuccessStatusCode();

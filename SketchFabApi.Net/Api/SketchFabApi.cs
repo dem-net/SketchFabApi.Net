@@ -40,7 +40,7 @@ namespace SketchFab
     public partial class SketchFabApi
     {
         private readonly ILogger<SketchFabApi> _logger;
-        private readonly HttpClient _httpClient;
+        private readonly IHttpClientFactory _httpClientFactory;
         private readonly JsonSerializerSettings _jsonSerializerSettings;
         private const string SketchFabApiUrl = "https://api.sketchfab.com/v3";
         private readonly DefaultContractResolver contractResolver = new DefaultContractResolver
@@ -67,10 +67,10 @@ namespace SketchFab
         # HINTS
         # - limit the rate at which you poll for the status (once every few seconds is more than enough)
         */
-        public SketchFabApi(ILogger<SketchFabApi> logger)
+        public SketchFabApi(ILogger<SketchFabApi> logger, IHttpClientFactory httpClientFactory)
         {
             this._logger = logger;
-            this._httpClient = new HttpClient();
+            this._httpClientFactory = httpClientFactory;
             this._jsonSerializerSettings = new JsonSerializerSettings()
             {
                 Formatting = Formatting.None,

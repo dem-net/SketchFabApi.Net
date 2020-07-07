@@ -44,7 +44,8 @@ namespace SketchFab
                 HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{SketchFabApiUrl}/me/account");
                 httpRequestMessage.AddAuthorizationHeader(sketchFabToken, tokenType);
 
-                var response = await _httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
+                var httpClient = _httpClientFactory.CreateClient();
+                var response = await httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
                 _logger.LogInformation($"{nameof(GetMyAccountAsync)} responded {response.StatusCode}");
                 response.EnsureSuccessStatusCode();
 
