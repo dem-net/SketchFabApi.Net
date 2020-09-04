@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 using Newtonsoft.Json.Converters;
 
-namespace SketchFab
+namespace Sketchfab
 {
     public class ModelOptions
     {

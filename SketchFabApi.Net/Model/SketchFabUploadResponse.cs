@@ -1,5 +1,5 @@
 ﻿//
-// SketchFabUploadResponse.cs
+// SketchfabUploadResponse.cs
 //
 // Author:
 //       Xavier Fischer 2020-4
@@ -26,16 +26,16 @@
 using System;
 using System.Net;
 
-namespace SketchFab
+namespace Sketchfab
 {
-    public class SketchFabUploadResponse
+    public class SketchfabUploadResponse
     {
-        public SketchFabUploadResponse()
+        public SketchfabUploadResponse()
         {
 
         }
 
-        public SketchFabUploadResponse(HttpStatusCode statusCode, string message)
+        public SketchfabUploadResponse(HttpStatusCode statusCode, string message)
         {
             StatusCode = statusCode;
             Message = message;

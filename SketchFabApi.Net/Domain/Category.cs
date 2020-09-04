@@ -25,7 +25,7 @@
 // THE SOFTWARE.
 using System.Collections.Generic;
 
-namespace SketchFab
+namespace Sketchfab
 {
     public class Category
     {

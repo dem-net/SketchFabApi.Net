@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace SketchFab
+namespace Sketchfab
 {
     public class UploadModelRequest
     {
@@ -11,14 +11,14 @@ namespace SketchFab
 
         /// <summary>
         /// Set to Bearer when token was obtained using OAuth2 flow
-        /// Set to Token if it is your token (API Key) copied from your SketchFab profile
+        /// Set to Token if it is your token (API Key) copied from your Sketchfab profile
         /// </summary>
         [JsonIgnore]
         public TokenType TokenType { get; set; } = TokenType.Token;
 
 
         /// <summary>
-        /// SketchFab uuid
+        /// Sketchfab uuid
         /// </summary>
         [JsonProperty("uid")]
         public string ModelId { get; set; }
@@ -92,7 +92,7 @@ namespace SketchFab
     {
 
         /// <summary>
-        /// SketchFab uuid
+        /// Sketchfab uuid
         /// </summary>
         [JsonProperty("uid")]
         public string ModelId { get; set; }

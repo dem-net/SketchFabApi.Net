@@ -27,7 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SketchFab
+namespace Sketchfab
 {
     public class Warning
     {

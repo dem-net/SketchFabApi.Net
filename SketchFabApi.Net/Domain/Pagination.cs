@@ -26,7 +26,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SketchFab
+namespace Sketchfab
 {
     public class PagedResult<T>
     {

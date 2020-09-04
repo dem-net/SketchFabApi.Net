@@ -1,5 +1,5 @@
 ﻿//
-// SketchFabApi.Account.cs
+// SketchfabApi.Account.cs
 //
 // Author:
 //       Xavier Fischer 2020-4
@@ -29,11 +29,11 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using SketchFab;
+using Sketchfab;
 
-namespace SketchFab
+namespace Sketchfab
 {
-    public partial class SketchFabApi
+    public partial class SketchfabApi
     {
         public async Task<Account> GetMyAccountAsync(string sketchFabToken, TokenType tokenType)
         {
@@ -41,7 +41,7 @@ namespace SketchFab
             {
                 _logger.LogInformation($"Get Account");
 
-                HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{SketchFabApiUrl}/me/account");
+                HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{SketchfabApiUrl}/me/account");
                 httpRequestMessage.AddAuthorizationHeader(sketchFabToken, tokenType);
 
                 var httpClient = _httpClientFactory.CreateClient();
@@ -57,7 +57,7 @@ namespace SketchFab
             }
             catch (Exception ex)
             {
-                _logger.LogError($"SketchFab get account error: {ex.Message}");
+                _logger.LogError($"Sketchfab get account error: {ex.Message}");
                 throw;
             }
 

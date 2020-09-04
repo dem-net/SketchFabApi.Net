@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SketchFab
+namespace Sketchfab
 {
 
     public class Thumbnails

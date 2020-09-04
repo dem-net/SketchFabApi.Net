@@ -1,5 +1,5 @@
 ﻿//
-// SketchFabApi.Collections.cs
+// SketchfabApi.Collections.cs
 //
 // Author:
 //       Xavier Fischer 2020-4
@@ -31,11 +31,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace SketchFab
+namespace Sketchfab
 {
 
 
-    public partial class SketchFabApi
+    public partial class SketchfabApi
     {
 
         public async Task<List<Collection>> GetMyCollectionsAsync(string sketchFabToken, TokenType tokenType)
@@ -44,7 +44,7 @@ namespace SketchFab
             {
                 _logger.LogInformation($"Get collections");
 
-                HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{SketchFabApiUrl}/me/collections");
+                HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{SketchfabApiUrl}/me/collections");
                 httpRequestMessage.AddAuthorizationHeader(sketchFabToken, tokenType);
                 
                 var httpClient = _httpClientFactory.CreateClient();
@@ -62,7 +62,7 @@ namespace SketchFab
             }
             catch (Exception ex)
             {
-                _logger.LogError($"SketchFab upload error: {ex.Message}");
+                _logger.LogError($"Sketchfab upload error: {ex.Message}");
                 throw;
             }
 
@@ -76,7 +76,7 @@ namespace SketchFab
                 if (modelIds == null || modelIds.Length == 0) throw new ArgumentNullException(nameof(modelIds));
                 if (string.IsNullOrWhiteSpace(collectionId)) throw new ArgumentNullException(nameof(collectionId));
 
-                HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, $"{SketchFabApiUrl}/collections/{collectionId}/models");
+                HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, $"{SketchfabApiUrl}/collections/{collectionId}/models");
                 httpRequestMessage.AddAuthorizationHeader(sketchFabToken, tokenType);
 
                 using var form = new MultipartFormDataContent();
@@ -95,7 +95,7 @@ namespace SketchFab
             }
             catch (Exception ex)
             {
-                _logger.LogError($"SketchFab add model(s) to collection error: {ex.Message}");
+                _logger.LogError($"Sketchfab add model(s) to collection error: {ex.Message}");
                 throw;
             }
 

@@ -1,5 +1,5 @@
 ﻿//
-// SketchFabApi.cs
+// SketchfabApi.cs
 //
 // Author:
 //       Xavier Fischer 2020-4
@@ -31,18 +31,18 @@ using Newtonsoft.Json.Serialization;
 using System;
 using System.Net.Http;
 
-namespace SketchFab
+namespace Sketchfab
 {
 
     /// <summary>
-    /// You will find your SketchFab token at https://sketchfab.com/settings/password
+    /// You will find your Sketchfab token at https://sketchfab.com/settings/password
     /// </summary>
-    public partial class SketchFabApi
+    public partial class SketchfabApi
     {
-        private readonly ILogger<SketchFabApi> _logger;
+        private readonly ILogger<SketchfabApi> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly JsonSerializerSettings _jsonSerializerSettings;
-        private const string SketchFabApiUrl = "https://api.sketchfab.com/v3";
+        private const string SketchfabApiUrl = "https://api.sketchfab.com/v3";
         private readonly DefaultContractResolver contractResolver = new DefaultContractResolver
         {
             NamingStrategy = new CamelCaseNamingStrategy()
@@ -67,7 +67,7 @@ namespace SketchFab
         # HINTS
         # - limit the rate at which you poll for the status (once every few seconds is more than enough)
         */
-        public SketchFabApi(ILogger<SketchFabApi> logger, IHttpClientFactory httpClientFactory)
+        public SketchFabApi(ILogger<SketchfabApi> logger, IHttpClientFactory httpClientFactory)
         {
             this._logger = logger;
             this._httpClientFactory = httpClientFactory;

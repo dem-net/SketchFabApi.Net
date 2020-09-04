@@ -1,4 +1,4 @@
-﻿namespace SketchFab
+﻿namespace Sketchfab
 {
     public class Image
     {
