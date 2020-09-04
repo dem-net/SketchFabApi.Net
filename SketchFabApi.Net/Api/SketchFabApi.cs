@@ -67,7 +67,7 @@ namespace Sketchfab
         # HINTS
         # - limit the rate at which you poll for the status (once every few seconds is more than enough)
         */
-        public SketchFabApi(ILogger<SketchfabApi> logger, IHttpClientFactory httpClientFactory)
+        public SketchfabApi(ILogger<SketchfabApi> logger, IHttpClientFactory httpClientFactory)
         {
             this._logger = logger;
             this._httpClientFactory = httpClientFactory;
