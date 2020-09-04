@@ -35,14 +35,14 @@ namespace Sketchfab
 {
 
     /// <summary>
-    /// You will find your Sketchfab token at https://sketchfab.com/settings/password
+    /// You will find your Sketchfab token at https://Sketchfab.com/settings/password
     /// </summary>
     public partial class SketchfabApi
     {
         private readonly ILogger<SketchfabApi> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly JsonSerializerSettings _jsonSerializerSettings;
-        private const string SketchfabApiUrl = "https://api.sketchfab.com/v3";
+        private const string SketchfabApiUrl = "https://api.Sketchfab.com/v3";
         private readonly DefaultContractResolver contractResolver = new DefaultContractResolver
         {
             NamingStrategy = new CamelCaseNamingStrategy()
@@ -60,7 +60,7 @@ namespace Sketchfab
         # The processing status can be one of the following:
         #    - PENDING: the model is in the processing queue
         #    - PROCESSING: the model is being processed
-        #    - SUCCESSED: the model has being sucessfully processed and can be view on sketchfab.com
+        #    - SUCCESSED: the model has being sucessfully processed and can be view on Sketchfab.com
         #    - FAILED: the processing has failed. An error message detailing the reason for the failure
         # will be returned with the response
         #

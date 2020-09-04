@@ -56,7 +56,7 @@ namespace Sketchfab
 
         /// <summary>
         /// Sets a license (slug). This makes the model downloadable to others. All downloadable models must have isInspectable enabled.
-        /// See https://api.sketchfab.com/v3/licenses
+        /// See https://api.Sketchfab.com/v3/licenses
         /// 
         /// 
         /// </summary>
