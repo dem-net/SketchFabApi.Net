@@ -61,7 +61,7 @@ namespace SketchFabApi.Samples
                     // If model has categories or forbidden tags, update it
                     if (myModel.categories.Any() || myModel.tags.Any(t => !allowedTags.Contains(t.name)))
                     {
-                        await Task.Delay(5000); // avoid HTTP 429 too many requests
+                        await Task.Delay(30000); // avoid HTTP 429 too many requests
 
                         UpdateModelRequest uploadRequest = new UpdateModelRequest()
                         {
