@@ -143,7 +143,7 @@ namespace Sketchfab
 
         }
 
-        public async Task<Model> GetModelAsync(string modelId)
+        public async Task<Model> GetModelAsync(string modelId, string sketchFabToken, TokenType tokenType)
         {
             try
             {
@@ -153,8 +153,10 @@ namespace Sketchfab
 
                 HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{SketchfabApiUrl}/models/{modelId}");
                 httpRequestMessage.Headers.CacheControl = new CacheControlHeaderValue() { NoCache = true };
+                httpRequestMessage.AddAuthorizationHeader(sketchFabToken, tokenType);
 
                 var httpClient = _httpClientFactory.CreateClient();
+                
                 var response = await httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
                 _logger.LogInformation($"{nameof(GetModelAsync)} responded {response.StatusCode}");
                 response.EnsureSuccessStatusCode();
@@ -229,11 +231,11 @@ namespace Sketchfab
 
        
 
-        public async Task<bool> IsReadyAsync(string modelId)
+        public async Task<bool> IsReadyAsync(string modelId, string token)
         {
             try
             {
-                var model = await this.GetModelAsync(modelId);
+                var model = await this.GetModelAsync(modelId, token, TokenType.Token);
 
                 return model.IsReady();
             }
