@@ -62,5 +62,34 @@ namespace Sketchfab
             }
 
         }
+
+        public async Task PostLike(string modelId, string sketchFabToken, TokenType tokenType)
+        {
+            try
+            {
+                _logger.LogInformation($"Like model {modelId}");
+
+                HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, $"{SketchfabApiUrl}/me/likes");
+                httpRequestMessage.AddAuthorizationHeader(sketchFabToken, tokenType);
+
+                using var form = new MultipartFormDataContent();
+                form.Headers.ContentType.MediaType = "multipart/form-data";
+
+                form.Add(new StringContent(modelId), "model");
+
+                httpRequestMessage.Content = form;
+
+                var httpClient = _httpClientFactory.CreateClient();
+                var response = await httpClient.SendAsync(httpRequestMessage);
+
+                _logger.LogInformation($"{nameof(PostLike)} responded {response.StatusCode}");
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Sketchfab Like error: {ex.Message}");
+                throw;
+            }
+        }
     }
 }

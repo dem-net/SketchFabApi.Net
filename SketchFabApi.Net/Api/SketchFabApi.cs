@@ -35,14 +35,14 @@ namespace Sketchfab
 {
 
     /// <summary>
-    /// You will find your Sketchfab token at https://Sketchfab.com/settings/password
+    /// You will find your Sketchfab token at https://sketchfab.com/settings/password
     /// </summary>
     public partial class SketchfabApi
     {
         private readonly ILogger<SketchfabApi> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly JsonSerializerSettings _jsonSerializerSettings;
-        private const string SketchfabApiUrl = "https://api.Sketchfab.com/v3";
+        private const string SketchfabApiUrl = "https://api.sketchfab.com/v3";
         private readonly DefaultContractResolver contractResolver = new DefaultContractResolver
         {
             NamingStrategy = new CamelCaseNamingStrategy()
