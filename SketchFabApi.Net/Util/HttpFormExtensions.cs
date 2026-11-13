@@ -42,9 +42,11 @@ namespace Sketchfab
             clone.Content = req.Content;
             clone.Version = req.Version;
 
-            foreach (KeyValuePair<string, object> prop in req.Properties)
+            // Options replaces the obsolete Properties bag (same underlying storage)
+            IDictionary<string, object> cloneOptions = clone.Options;
+            foreach (KeyValuePair<string, object> opt in req.Options)
             {
-                clone.Properties.Add(prop);
+                cloneOptions.Add(opt);
             }
 
             foreach (KeyValuePair<string, IEnumerable<string>> header in req.Headers)
