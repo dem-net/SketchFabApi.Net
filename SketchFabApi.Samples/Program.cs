@@ -77,7 +77,7 @@ namespace SketchFabApi.Samples
             services.Configure<AppSecrets>(config.GetSection(nameof(AppSecrets)));
 
 
-            services.AddScoped<SketchFab.SketchFabApi>();
+            services.AddScoped<Sketchfab.SketchfabApi>();
             services.AddSingleton<SketchFabSample>();
 
 
