@@ -5,7 +5,6 @@
     <Version>1.0.4</Version>
     <AssemblyVersion>1.0.4</AssemblyVersion>
     <RootNamespace>Sketchfab</RootNamespace>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Xavier Fischer</Authors>
     <Company>SketchfabApi.Net</Company>
     <Description>Unofficial .Net Core API for Skecthfab Data API</Description>
@@ -18,13 +17,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.403">
+    <PackageReference Include="Microsoft.SourceLink.GitHub">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.14" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.14" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Http" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="Newtonsoft.Json" />
   </ItemGroup>
 
   <!-- Build package only in Release -->
@@ -34,9 +33,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-  <!-- Build package only in Release -->
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug'">
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
   </PropertyGroup>
 

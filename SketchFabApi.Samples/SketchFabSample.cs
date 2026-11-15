@@ -29,19 +29,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using SketchFab;
+using Sketchfab;
 
 namespace SketchFabApi.Samples
 {
     public class SketchFabSample
     {
         private readonly ILogger<SketchFabSample> logger;
-        private readonly SketchFab.SketchFabApi sketchFabApi;
+        private readonly Sketchfab.SketchfabApi sketchFabApi;
         private readonly AppSecrets secrets;
 
         public SketchFabSample(ILogger<SketchFabSample> logger
             , IOptions<AppSecrets> secrets
-            , SketchFab.SketchFabApi sketchFabApi)
+            , Sketchfab.SketchfabApi sketchFabApi)
         {
             this.logger = logger;
             this.sketchFabApi = sketchFabApi;
@@ -82,7 +82,7 @@ namespace SketchFabApi.Samples
                 }
 
                 // Test get model
-                var model = await sketchFabApi.GetModelAsync("f934cb5207624d14841f19ca85b4ea2c");
+                var model = await sketchFabApi.GetModelAsync("f934cb5207624d14841f19ca85b4ea2c", secrets.SketchFabToken, TokenType.Token);
 
                 // Test get my account
                 await GetAccountAsync(secrets.SketchFabToken, TokenType.Bearer);

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SketchFabApi.Net/SketchFabApi.Net.csproj" />
+  <Project Path="SketchFabApi.Samples/SketchFabApi.Samples.csproj" />
+</Solution>
