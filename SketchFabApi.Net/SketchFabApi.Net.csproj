@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
-    <Version>1.0.4</Version>
-    <AssemblyVersion>1.0.4</AssemblyVersion>
+    <Version>2.0.0</Version>
+    <AssemblyVersion>2.0.0</AssemblyVersion>
     <RootNamespace>Sketchfab</RootNamespace>
     <Authors>Xavier Fischer</Authors>
     <Company>SketchfabApi.Net</Company>
@@ -23,7 +23,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Http" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
-    <PackageReference Include="Newtonsoft.Json" />
   </ItemGroup>
 
   <!-- Build package only in Release -->
@@ -38,6 +37,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\" />
+    <InternalsVisibleTo Include="SketchFabApi.Net.Tests" />
   </ItemGroup>
 </Project>

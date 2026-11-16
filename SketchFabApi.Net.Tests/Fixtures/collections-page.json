@@ -1,0 +1,194 @@
+{
+  "cursors": {
+    "next": "cD0yMDE5LTA5LTE5KzA5JTNBNTUlM0ExOC44Njk4MTE=",
+    "previous": null
+  },
+  "next": "https://api.sketchfab.com/v3/collections?count=2&cursor=cD0yMDE5LTA5LTE5KzA5JTNBNTUlM0ExOC44Njk4MTE%3D&user=xfischer",
+  "previous": null,
+  "results": [
+    {
+      "uri": "https://api.sketchfab.com/v3/collections/ef4914cce6a842589fecd78ac206a09b",
+      "name": "Realistic",
+      "uid": "ef4914cce6a842589fecd78ac206a09b",
+      "slug": "realistic",
+      "description": null,
+      "modelCount": 2,
+      "user": {
+        "uid": "a29449c23f084a818bf681583f58165b",
+        "username": "xfischer",
+        "displayName": "Xavier Fischer - Elevation API",
+        "account": "basic",
+        "profileUrl": "https://sketchfab.com/xfischer",
+        "avatar": {
+          "uid": "1df939cdf94140eab999372974720181",
+          "uri": "https://api.sketchfab.com/v3/avatars/1df939cdf94140eab999372974720181",
+          "images": [
+            {
+              "width": 32,
+              "height": 32,
+              "size": 2052,
+              "url": "https://media.sketchfab.com/avatars/1df939cdf94140eab999372974720181/78d4c8cfa8ca470eb485e528a939168f.png"
+            },
+            {
+              "width": 48,
+              "height": 48,
+              "size": 4193,
+              "url": "https://media.sketchfab.com/avatars/1df939cdf94140eab999372974720181/e7d19e28d7a349e590fa5ddfecfab6e9.png"
+            },
+            {
+              "width": 90,
+              "height": 90,
+              "size": 11609,
+              "url": "https://media.sketchfab.com/avatars/1df939cdf94140eab999372974720181/21e68b1b8dfb443aa3d315dde793bc23.png"
+            },
+            {
+              "width": 100,
+              "height": 100,
+              "size": 13610,
+              "url": "https://media.sketchfab.com/avatars/1df939cdf94140eab999372974720181/30531296e9d9447fa2d8d3d0849c8bc0.png"
+            }
+          ]
+        },
+        "uri": "https://api.sketchfab.com/v3/users/a29449c23f084a818bf681583f58165b"
+      },
+      "thumbnails": {
+        "images": [
+          {
+            "uid": "c4b3778b9fc048f88fd4c003915e9345",
+            "width": 1920,
+            "height": 1080,
+            "size": 461629,
+            "url": "https://media.sketchfab.com/models/2511549fa6f64e1b8742eef8dcda606f/thumbnails/b68244164f684b37bc2a06692c307945/5cc2b6ad6c4d4953b4dce105827c6232.jpeg"
+          },
+          {
+            "uid": "ae615ff9ccca469293dcafbcd433ea13",
+            "width": 1024,
+            "height": 576,
+            "size": 104387,
+            "url": "https://media.sketchfab.com/models/2511549fa6f64e1b8742eef8dcda606f/thumbnails/b68244164f684b37bc2a06692c307945/2503516883aa409eaaf89ee83137a6b7.jpeg"
+          },
+          {
+            "uid": "2777ea025aa24de4a04e4dd07d8da109",
+            "width": 720,
+            "height": 405,
+            "size": 50770,
+            "url": "https://media.sketchfab.com/models/2511549fa6f64e1b8742eef8dcda606f/thumbnails/b68244164f684b37bc2a06692c307945/46e2232298f04c09948a8646d1482c4a.jpeg"
+          },
+          {
+            "uid": "36b786a997304535a911c573371b889c",
+            "width": 256,
+            "height": 144,
+            "size": 7189,
+            "url": "https://media.sketchfab.com/models/2511549fa6f64e1b8742eef8dcda606f/thumbnails/b68244164f684b37bc2a06692c307945/bd0344659e2941379e1445a9c21c754f.jpeg"
+          },
+          {
+            "uid": "9f58d7d381b74b728da86ad34a2b8cab",
+            "width": 64,
+            "height": 36,
+            "size": 978,
+            "url": "https://media.sketchfab.com/models/2511549fa6f64e1b8742eef8dcda606f/thumbnails/b68244164f684b37bc2a06692c307945/2252481f329948e4b7cd2a7f29bda6bd.jpeg"
+          }
+        ]
+      },
+      "embedUrl": "https://sketchfab.com/playlists/embed?collection=ef4914cce6a842589fecd78ac206a09b",
+      "createdAt": "2019-09-09T13:30:37.825771",
+      "updatedAt": "2020-04-21T21:05:46.216862",
+      "models": "https://api.sketchfab.com/v3/collections/ef4914cce6a842589fecd78ac206a09b/models",
+      "subscriberCount": 0,
+      "hasRestrictedContent": false,
+      "isAgeRestricted": false
+    },
+    {
+      "uri": "https://api.sketchfab.com/v3/collections/180239a74c904a97a08c22a12e9d8638",
+      "name": "Nice spots",
+      "uid": "180239a74c904a97a08c22a12e9d8638",
+      "slug": "nice-spots",
+      "description": null,
+      "modelCount": 3,
+      "user": {
+        "uid": "a29449c23f084a818bf681583f58165b",
+        "username": "xfischer",
+        "displayName": "Xavier Fischer - Elevation API",
+        "account": "basic",
+        "profileUrl": "https://sketchfab.com/xfischer",
+        "avatar": {
+          "uid": "1df939cdf94140eab999372974720181",
+          "uri": "https://api.sketchfab.com/v3/avatars/1df939cdf94140eab999372974720181",
+          "images": [
+            {
+              "width": 32,
+              "height": 32,
+              "size": 2052,
+              "url": "https://media.sketchfab.com/avatars/1df939cdf94140eab999372974720181/78d4c8cfa8ca470eb485e528a939168f.png"
+            },
+            {
+              "width": 48,
+              "height": 48,
+              "size": 4193,
+              "url": "https://media.sketchfab.com/avatars/1df939cdf94140eab999372974720181/e7d19e28d7a349e590fa5ddfecfab6e9.png"
+            },
+            {
+              "width": 90,
+              "height": 90,
+              "size": 11609,
+              "url": "https://media.sketchfab.com/avatars/1df939cdf94140eab999372974720181/21e68b1b8dfb443aa3d315dde793bc23.png"
+            },
+            {
+              "width": 100,
+              "height": 100,
+              "size": 13610,
+              "url": "https://media.sketchfab.com/avatars/1df939cdf94140eab999372974720181/30531296e9d9447fa2d8d3d0849c8bc0.png"
+            }
+          ]
+        },
+        "uri": "https://api.sketchfab.com/v3/users/a29449c23f084a818bf681583f58165b"
+      },
+      "thumbnails": {
+        "images": [
+          {
+            "uid": "b5431891808544359bb496cc35c16e2f",
+            "width": 1920,
+            "height": 1080,
+            "size": 262516,
+            "url": "https://media.sketchfab.com/models/25d80fb73f9a42359eb8f264de140d30/thumbnails/cc1555deb5f9423dba32e912b3d40d67/16ac82387b644122b395668028fe7c6b.jpeg"
+          },
+          {
+            "uid": "fb1be4a0d25d44be8488c5b117f7178a",
+            "width": 1024,
+            "height": 576,
+            "size": 64635,
+            "url": "https://media.sketchfab.com/models/25d80fb73f9a42359eb8f264de140d30/thumbnails/cc1555deb5f9423dba32e912b3d40d67/91d8c7c3340e4e9ba5e0adfaf08dee01.jpeg"
+          },
+          {
+            "uid": "9dae75ae51db4f40b8182d6783ebaee5",
+            "width": 720,
+            "height": 405,
+            "size": 33960,
+            "url": "https://media.sketchfab.com/models/25d80fb73f9a42359eb8f264de140d30/thumbnails/cc1555deb5f9423dba32e912b3d40d67/da70594fd9a148769939f5804178a245.jpeg"
+          },
+          {
+            "uid": "4c3b37a7a52946e0a8326701ace17e2a",
+            "width": 256,
+            "height": 144,
+            "size": 5437,
+            "url": "https://media.sketchfab.com/models/25d80fb73f9a42359eb8f264de140d30/thumbnails/cc1555deb5f9423dba32e912b3d40d67/a04d4d0e71e44b4ea5dc6a5598ead146.jpeg"
+          },
+          {
+            "uid": "d83df51b6cac4b399a2c4d449746bbf1",
+            "width": 64,
+            "height": 36,
+            "size": 858,
+            "url": "https://media.sketchfab.com/models/25d80fb73f9a42359eb8f264de140d30/thumbnails/cc1555deb5f9423dba32e912b3d40d67/edec91dc6e21478895db58fd7289476e.jpeg"
+          }
+        ]
+      },
+      "embedUrl": "https://sketchfab.com/playlists/embed?collection=180239a74c904a97a08c22a12e9d8638",
+      "createdAt": "2019-09-19T09:55:18.869811",
+      "updatedAt": "2020-01-22T09:38:26.929839",
+      "models": "https://api.sketchfab.com/v3/collections/180239a74c904a97a08c22a12e9d8638/models",
+      "subscriberCount": 3,
+      "hasRestrictedContent": false,
+      "isAgeRestricted": false
+    }
+  ]
+}

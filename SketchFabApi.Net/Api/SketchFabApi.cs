@@ -25,68 +25,113 @@
 // THE SOFTWARE.
 
 using System;
+using System.IO;
 using System.Net.Http;
+using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
 
 namespace Sketchfab;
 
-
 /// <summary>
+/// Client for the Sketchfab Data API v3. Register it with <c>services.AddSketchfabApi()</c>.
 /// You will find your Sketchfab token at https://sketchfab.com/settings/password
 /// </summary>
-public partial class SketchfabApi
+/// <remarks>
+/// Uploading a model to Sketchfab is a two step process:
+/// <list type="number">
+/// <item>Upload a model. If the upload is successful, the API returns the model's uid in the <c>Location</c> header
+/// and the model is placed in the processing queue.</item>
+/// <item>Poll for the processing status (PENDING, PROCESSING, SUCCEEDED or FAILED) with the model uid.
+/// Limit the rate at which you poll: once every few seconds is more than enough.</item>
+/// </list>
+/// </remarks>
+public partial class SketchfabApi(ILogger<SketchfabApi> logger, IHttpClientFactory httpClientFactory)
 {
-    private readonly ILogger<SketchfabApi> _logger;
-    private readonly IHttpClientFactory _httpClientFactory;
-    private readonly JsonSerializerSettings _jsonSerializerSettings;
+    /// <summary>
+    /// Name of the <see cref="HttpClient"/> requested from the <see cref="IHttpClientFactory"/>, configured by <c>AddSketchfabApi()</c>.
+    /// </summary>
+    public const string HttpClientName = "Sketchfab";
+
     private const string SketchfabApiUrl = "https://api.sketchfab.com/v3";
-    private readonly DefaultContractResolver contractResolver = new()
-    {
-        NamingStrategy = new CamelCaseNamingStrategy()
-    };
+    private const int MaxLoggedErrorBodyLength = 500;
 
+    private readonly ILogger<SketchfabApi> _logger = logger;
 
-    /*
-    # Uploading a model to Sketchfab is a two step process
-    #
-    # 1. Upload a model. If the upload is successful, the API will return
-    # the model's uid in the `Location` header, and the model will be placed in the processing queue
-    #
-    # 2. Poll for the processing status
-    # You can use your model id (see 1.) to poll the model processing status
-    # The processing status can be one of the following:
-    #    - PENDING: the model is in the processing queue
-    #    - PROCESSING: the model is being processed
-    #    - SUCCESSED: the model has being sucessfully processed and can be view on Sketchfab.com
-    #    - FAILED: the processing has failed. An error message detailing the reason for the failure
-    # will be returned with the response
-    #
-    # HINTS
-    # - limit the rate at which you poll for the status (once every few seconds is more than enough)
-    */
-    public SketchfabApi(ILogger<SketchfabApi> logger, IHttpClientFactory httpClientFactory)
+    private HttpClient CreateClient() => httpClientFactory.CreateClient(HttpClientName);
+
+    private static HttpRequestMessage CreateRequest(HttpMethod method, string url, string token, TokenType tokenType)
     {
-        this._logger = logger;
-        this._httpClientFactory = httpClientFactory;
-        this._jsonSerializerSettings = new JsonSerializerSettings()
+        var request = new HttpRequestMessage(method, url);
+        request.AddAuthorizationHeader(token, tokenType);
+        return request;
+    }
+
+    /// <summary>
+    /// Sends the request and fails on a non-success status code. The response body is logged on failure.
+    /// </summary>
+    private async Task<HttpResponseMessage> SendCheckedAsync(HttpRequestMessage request, string operation, CancellationToken cancellationToken)
+    {
+        HttpResponseMessage response;
+        try
         {
-            Formatting = Formatting.None,
-            NullValueHandling = NullValueHandling.Ignore,
-            ContractResolver = contractResolver
-        };
-        _jsonSerializerSettings.Converters.Add(new StringEnumConverter());
-        JsonConvert.DefaultSettings = () => _jsonSerializerSettings;
+            response = await CreateClient().SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            _logger.LogError(ex, "Sketchfab {Operation} failed", operation);
+            throw;
+        }
 
+        _logger.LogInformation("Sketchfab {Operation} responded {StatusCode}", operation, response.StatusCode);
+        if (!response.IsSuccessStatusCode)
+        {
+            using (response)
+            {
+                await LogErrorResponseAsync(response, operation, cancellationToken).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
+            }
+        }
+        return response;
     }
 
-    private string ShortenString(string str, int length)
+    private async Task SendAsync(HttpRequestMessage request, string operation, CancellationToken cancellationToken)
     {
-        return str.Substring(0, Math.Min(str.Length, length));
+        using var response = await SendCheckedAsync(request, operation, cancellationToken).ConfigureAwait(false);
     }
-    private void AddCommonModelFields(MultipartFormDataContent form, UploadModelRequest request)
+
+    private async Task<T> SendForJsonAsync<T>(HttpRequestMessage request, JsonTypeInfo<T> typeInfo, string operation, CancellationToken cancellationToken)
+    {
+        using var response = await SendCheckedAsync(request, operation, cancellationToken).ConfigureAwait(false);
+        try
+        {
+            var result = await response.Content.ReadFromJsonAsync(typeInfo, cancellationToken).ConfigureAwait(false);
+            return result ?? throw new InvalidDataException($"Sketchfab {operation} returned an empty response.");
+        }
+        catch (JsonException ex)
+        {
+            _logger.LogError(ex, "Sketchfab {Operation} returned an unexpected response", operation);
+            throw;
+        }
+    }
+
+    private async Task LogErrorResponseAsync(HttpResponseMessage response, string operation, CancellationToken cancellationToken)
+    {
+        string body = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+        if (body.Length > MaxLoggedErrorBodyLength)
+        {
+            body = body[..MaxLoggedErrorBodyLength] + "...";
+        }
+        _logger.LogError("Sketchfab {Operation} error: {StatusCode} {ReasonPhrase} {Body}", operation, (int)response.StatusCode, response.ReasonPhrase, body);
+    }
+
+    private static string ShortenString(string? str, int length)
+        => str is null ? string.Empty : str[..Math.Min(str.Length, length)];
+
+    private static void AddCommonModelFields(MultipartFormDataContent form, UploadModelRequest request)
     {
         form.Add(new StringContent(ShortenString(request.Name, 48)), "name");
         form.Add(new StringContent(ShortenString(request.Description, 1024)), "description");
@@ -94,15 +139,14 @@ public partial class SketchfabApi
         form.Add(new StringContent(request.IsInspectable.To_0_1()), "isInspectable");
         form.Add(new StringContent(request.IsPublished.To_0_1()), "isPublished");
         form.Add(new StringContent(request.License), "license");
-        var optionsJson = JsonConvert.SerializeObject(request.Options);
-        form.Add(new StringContent(JsonConvert.SerializeObject(request.Options)), "options");
-        form.AddRange(request.Tags, "tags");
-        form.AddRange(request.Categories, "categories");
-    }
-    private void AddCommonModelFields(MultipartFormDataContent form, UpdateModelRequest request)
-    {
+        form.Add(new StringContent(JsonSerializer.Serialize(request.Options, SketchfabJsonContext.Default.ModelOptions)), "options");
         form.AddRange(request.Tags, "tags");
         form.AddRange(request.Categories, "categories");
     }
 
+    private static void AddCommonModelFields(MultipartFormDataContent form, UpdateModelRequest request)
+    {
+        form.AddRange(request.Tags, "tags");
+        form.AddRange(request.Categories, "categories");
+    }
 }

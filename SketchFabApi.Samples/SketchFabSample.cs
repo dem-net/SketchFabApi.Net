@@ -41,7 +41,7 @@ public class SketchFabSample(ILogger<SketchFabSample> logger
     private readonly Sketchfab.SketchfabApi sketchFabApi = sketchFabApi;
     private readonly AppSecrets secrets = secrets.Value;
 
-    internal async Task Run()
+    internal async Task RunAsync()
     {
         try
         {

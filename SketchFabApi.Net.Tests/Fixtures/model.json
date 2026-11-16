@@ -1,0 +1,157 @@
+{
+  "animationCount": 0,
+  "categories": [],
+  "commentCount": 0,
+  "createdAt": "2020-04-21T23:20:34.991289",
+  "embedUrl": "https://sketchfab.com/models/f934cb5207624d14841f19ca85b4ea2c/embed",
+  "faceCount": 608608,
+  "isAgeRestricted": false,
+  "license": {
+    "uri": "https://api.sketchfab.com/v3/licenses/2628dbe5140a4e9592126c8df566c0b7",
+    "label": "CC Attribution-NonCommercial-ShareAlike",
+    "fullName": "CC Attribution-NonCommercial-ShareAlike",
+    "requirements": "Author must be credited. No commercial use. Modified versions must have the same license.",
+    "url": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+    "slug": "by-nc-sa"
+  },
+  "likeCount": 4,
+  "name": "Aix-en-Provence with OSM buildings",
+  "publishedAt": "2020-04-22T08:57:41.940279",
+  "soundCount": 0,
+  "staffpickedAt": null,
+  "tags": [
+    {
+      "name": "france",
+      "slug": "france",
+      "uri": "https://api.sketchfab.com/v3/tags/france"
+    },
+    {
+      "name": "terrain",
+      "slug": "terrain",
+      "uri": "https://api.sketchfab.com/v3/tags/terrain"
+    },
+    {
+      "name": "buildings",
+      "slug": "buildings",
+      "uri": "https://api.sketchfab.com/v3/tags/buildings"
+    },
+    {
+      "name": "openstreetmap",
+      "slug": "openstreetmap",
+      "uri": "https://api.sketchfab.com/v3/tags/openstreetmap"
+    },
+    {
+      "name": "osm",
+      "slug": "osm",
+      "uri": "https://api.sketchfab.com/v3/tags/osm"
+    },
+    {
+      "name": "aix-en-provence",
+      "slug": "aix-en-provence",
+      "uri": "https://api.sketchfab.com/v3/tags/aix-en-provence"
+    },
+    {
+      "name": "elevationapi",
+      "slug": "elevationapi",
+      "uri": "https://api.sketchfab.com/v3/tags/elevationapi"
+    }
+  ],
+  "thumbnails": {
+    "images": [
+      {
+        "uid": "eabb870f721743338712054b24e3f746",
+        "width": 1920,
+        "height": 1080,
+        "size": 899309,
+        "url": "https://media.sketchfab.com/models/f934cb5207624d14841f19ca85b4ea2c/thumbnails/5b8b86360ded4500b6e94868a4375465/d63022d350474d7a9d3fd749f8cefac7.jpeg"
+      },
+      {
+        "uid": "380770e2a0c14db8bfca3872862de783",
+        "width": 1024,
+        "height": 576,
+        "size": 300921,
+        "url": "https://media.sketchfab.com/models/f934cb5207624d14841f19ca85b4ea2c/thumbnails/5b8b86360ded4500b6e94868a4375465/7d8b0d0054ec48af82ef0439ce976f69.jpeg"
+      },
+      {
+        "uid": "2556f31dda3948c894683eb6e4ea5d06",
+        "width": 720,
+        "height": 405,
+        "size": 162878,
+        "url": "https://media.sketchfab.com/models/f934cb5207624d14841f19ca85b4ea2c/thumbnails/5b8b86360ded4500b6e94868a4375465/5d89124de185443cbf5a763eba9dda15.jpeg"
+      },
+      {
+        "uid": "ea215a9fff50461e991c87e25dffd816",
+        "width": 256,
+        "height": 144,
+        "size": 22146,
+        "url": "https://media.sketchfab.com/models/f934cb5207624d14841f19ca85b4ea2c/thumbnails/5b8b86360ded4500b6e94868a4375465/60465a3a0c2244f59d605c92f88eed9b.jpeg"
+      },
+      {
+        "uid": "62633aed7cc84ab2bb2aaf5d298ea734",
+        "width": 64,
+        "height": 36,
+        "size": 1578,
+        "url": "https://media.sketchfab.com/models/f934cb5207624d14841f19ca85b4ea2c/thumbnails/5b8b86360ded4500b6e94868a4375465/486ab0b394b44ef788e3bbbf9fcdb6d0.jpeg"
+      }
+    ]
+  },
+  "uid": "f934cb5207624d14841f19ca85b4ea2c",
+  "uri": "https://api.sketchfab.com/v3/models/f934cb5207624d14841f19ca85b4ea2c",
+  "user": {
+    "uid": "a29449c23f084a818bf681583f58165b",
+    "username": "xfischer",
+    "displayName": "Xavier Fischer - Elevation API",
+    "account": "basic",
+    "profileUrl": "https://sketchfab.com/xfischer",
+    "avatar": {
+      "uid": "1df939cdf94140eab999372974720181",
+      "uri": "https://api.sketchfab.com/v3/avatars/1df939cdf94140eab999372974720181",
+      "images": [
+        {
+          "width": 32,
+          "height": 32,
+          "size": 2052,
+          "url": "https://media.sketchfab.com/avatars/1df939cdf94140eab999372974720181/78d4c8cfa8ca470eb485e528a939168f.png"
+        },
+        {
+          "width": 48,
+          "height": 48,
+          "size": 4193,
+          "url": "https://media.sketchfab.com/avatars/1df939cdf94140eab999372974720181/e7d19e28d7a349e590fa5ddfecfab6e9.png"
+        },
+        {
+          "width": 90,
+          "height": 90,
+          "size": 11609,
+          "url": "https://media.sketchfab.com/avatars/1df939cdf94140eab999372974720181/21e68b1b8dfb443aa3d315dde793bc23.png"
+        },
+        {
+          "width": 100,
+          "height": 100,
+          "size": 13610,
+          "url": "https://media.sketchfab.com/avatars/1df939cdf94140eab999372974720181/30531296e9d9447fa2d8d3d0849c8bc0.png"
+        }
+      ]
+    },
+    "uri": "https://api.sketchfab.com/v3/users/a29449c23f084a818bf681583f58165b"
+  },
+  "vertexCount": 385414,
+  "viewCount": 200,
+  "viewerUrl": "https://sketchfab.com/3d-models/aix-en-provence-with-osm-buildings-f934cb5207624d14841f19ca85b4ea2c",
+  "isDownloadable": true,
+  "isProtected": false,
+  "description": "Exporter test \r\n\r\n* Generator: [DEM Net Elevation API](https://elevationapi.com)\r\n* Digital Elevation Model: [NASADEM](https://doi.org/10.5067/MEaSUREs/NASADEM/NASADEM_HGT.001)\r\n* Imagery: [ThunderForest](https://www.thunderforest.com)\r\n* Data: [OpenStreetMap](http://www.openstreetmap.org)",
+  "price": null,
+  "downloadCount": 35,
+  "editorUrl": "https://sketchfab.com/models/f934cb5207624d14841f19ca85b4ea2c/edit",
+  "status": {
+    "warning": {},
+    "processing": "SUCCEEDED"
+  },
+  "source": "elevationapi",
+  "hasCommentsDisabled": false,
+  "updatedAt": "2022-04-17T17:41:58.892598",
+  "pbrType": null,
+  "textureCount": 1,
+  "materialCount": 2
+}

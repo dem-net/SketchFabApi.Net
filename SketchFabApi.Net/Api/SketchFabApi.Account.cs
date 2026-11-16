@@ -26,69 +26,40 @@
 
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Sketchfab;
 
 namespace Sketchfab;
 
 public partial class SketchfabApi
 {
-    public async Task<Account> GetMyAccountAsync(string sketchFabToken, TokenType tokenType)
+    public async Task<Account> GetMyAccountAsync(string sketchFabToken, TokenType tokenType, CancellationToken cancellationToken = default)
     {
-        try
-        {
-            _logger.LogInformation($"Get Account");
+        _logger.LogInformation("Get account");
 
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{SketchfabApiUrl}/me/account");
-            httpRequestMessage.AddAuthorizationHeader(sketchFabToken, tokenType);
-
-            var httpClient = _httpClientFactory.CreateClient();
-            var response = await httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
-            _logger.LogInformation($"{nameof(GetMyAccountAsync)} responded {response.StatusCode}");
-            response.EnsureSuccessStatusCode();
-
-            var jsonPayload = await response.Content.ReadAsStringAsync();
-
-            var account = JsonConvert.DeserializeObject<Account>(jsonPayload);
-
-            return account;
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError($"Sketchfab get account error: {ex.Message}");
-            throw;
-        }
-
+        using var request = CreateRequest(HttpMethod.Get, $"{SketchfabApiUrl}/me/account", sketchFabToken, tokenType);
+        return await SendForJsonAsync(request, SketchfabJsonContext.Default.Account, nameof(GetMyAccountAsync), cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task PostLike(string modelId, string sketchFabToken, TokenType tokenType)
+    public async Task PostLikeAsync(string modelId, string sketchFabToken, TokenType tokenType, CancellationToken cancellationToken = default)
     {
-        try
+        ArgumentException.ThrowIfNullOrWhiteSpace(modelId);
+        _logger.LogInformation("Like model {ModelId}", modelId);
+
+        using var form = new MultipartFormDataContent
         {
-            _logger.LogInformation($"Like model {modelId}");
+            { new StringContent(modelId), "model" }
+        };
+        using var request = CreateRequest(HttpMethod.Post, $"{SketchfabApiUrl}/me/likes", sketchFabToken, tokenType);
+        request.Content = form;
 
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, $"{SketchfabApiUrl}/me/likes");
-            httpRequestMessage.AddAuthorizationHeader(sketchFabToken, tokenType);
-
-            using var form = new MultipartFormDataContent();
-            form.Headers.ContentType.MediaType = "multipart/form-data";
-
-            form.Add(new StringContent(modelId), "model");
-
-            httpRequestMessage.Content = form;
-
-            var httpClient = _httpClientFactory.CreateClient();
-            var response = await httpClient.SendAsync(httpRequestMessage);
-
-            _logger.LogInformation($"{nameof(PostLike)} responded {response.StatusCode}");
-            response.EnsureSuccessStatusCode();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError($"Sketchfab Like error: {ex.Message}");
-            throw;
-        }
+        await SendAsync(request, nameof(PostLikeAsync), cancellationToken).ConfigureAwait(false);
     }
+
+    [Obsolete("Use PostLikeAsync.")]
+#pragma warning disable VSTHRD200 // kept for source compatibility
+    public Task PostLike(string modelId, string sketchFabToken, TokenType tokenType)
+        => PostLikeAsync(modelId, sketchFabToken, tokenType);
+#pragma warning restore VSTHRD200
 }

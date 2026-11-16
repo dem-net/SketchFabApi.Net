@@ -1,6 +1,5 @@
 ﻿using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Newtonsoft.Json.Converters;
 
 namespace Sketchfab;
 
@@ -48,7 +47,7 @@ public class ModelOptionsBackground
     //public bool Transparent { get; set; }
 }
 
-[JsonConverter(typeof(StringEnumConverter))]
+[JsonConverter(typeof(JsonStringEnumConverter<ShadingType>))]
 public enum ShadingType
 {
     lit,
