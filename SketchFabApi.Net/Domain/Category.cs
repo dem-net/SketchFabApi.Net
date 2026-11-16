@@ -25,17 +25,14 @@
 // THE SOFTWARE.
 using System.Collections.Generic;
 
-namespace Sketchfab
+namespace Sketchfab;
+
+public class Category
 {
-    public class Category
-    {
-        public List<Thumbnail> thumbnails { get; set; }
-        public string uri { get; set; }
-        public string slug { get; set; }
-        public string name { get; set; }
-        public string uid { get; set; }
-        public string icon { get; set; }
-    }
-
-
+    public List<Thumbnail> thumbnails { get; set; }
+    public string uri { get; set; }
+    public string slug { get; set; }
+    public string name { get; set; }
+    public string uid { get; set; }
+    public string icon { get; set; }
 }

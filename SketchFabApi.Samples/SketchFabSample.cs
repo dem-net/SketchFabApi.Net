@@ -31,104 +31,96 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Sketchfab;
 
-namespace SketchFabApi.Samples
+namespace SketchFabApi.Samples;
+
+public class SketchFabSample(ILogger<SketchFabSample> logger
+        , IOptions<AppSecrets> secrets
+        , Sketchfab.SketchfabApi sketchFabApi)
 {
-    public class SketchFabSample
+    private readonly ILogger<SketchFabSample> logger = logger;
+    private readonly Sketchfab.SketchfabApi sketchFabApi = sketchFabApi;
+    private readonly AppSecrets secrets = secrets.Value;
+
+    internal async Task Run()
     {
-        private readonly ILogger<SketchFabSample> logger;
-        private readonly Sketchfab.SketchfabApi sketchFabApi;
-        private readonly AppSecrets secrets;
-
-        public SketchFabSample(ILogger<SketchFabSample> logger
-            , IOptions<AppSecrets> secrets
-            , Sketchfab.SketchfabApi sketchFabApi)
+        try
         {
-            this.logger = logger;
-            this.sketchFabApi = sketchFabApi;
-            this.secrets = secrets.Value;
-        }
 
-        internal async Task Run()
-        {
-            try
+            HashSet<string> allowedTags = new HashSet<string>(["mycenaean-atlas", "elevationapi"]);
+            int numModelsUpdated = 0;
+            int numModelsSkipped = 0;
+            await foreach(var myModel in sketchFabApi.GetMyModelsAsync(secrets.SketchFabToken, TokenType.Token))
             {
-
-                HashSet<string> allowedTags = new HashSet<string>(new string[] { "mycenaean-atlas", "elevationapi" });
-                int numModelsUpdated = 0;
-                int numModelsSkipped = 0;
-                await foreach(var myModel in sketchFabApi.GetMyModelsAsync(secrets.SketchFabToken, TokenType.Token))
+                // If model has categories or forbidden tags, update it
+                if (myModel.categories.Any() || myModel.tags.Any(t => !allowedTags.Contains(t.name)))
                 {
-                    // If model has categories or forbidden tags, update it
-                    if (myModel.categories.Any() || myModel.tags.Any(t => !allowedTags.Contains(t.name)))
+                    await Task.Delay(30000); // avoid HTTP 429 too many requests
+
+                    UpdateModelRequest uploadRequest = new UpdateModelRequest()
                     {
-                        await Task.Delay(30000); // avoid HTTP 429 too many requests
-
-                        UpdateModelRequest uploadRequest = new UpdateModelRequest()
-                        {
-                            Categories = new List<string>(),
-                            Tags = allowedTags.ToList(),
-                            ModelId = myModel.uid,
-                        };
-                        await sketchFabApi.UpdateModelAsync(myModel.uid, uploadRequest, secrets.SketchFabToken, TokenType.Token);
-                        numModelsUpdated++;
-                    }
-                    else
-                    {
-                        numModelsSkipped++;
-                    }
-
-
-                    logger.LogInformation($"Update models progress: {numModelsUpdated} updated, {numModelsSkipped} skipped");
+                        Categories = [],
+                        Tags = [.. allowedTags],
+                        ModelId = myModel.uid,
+                    };
+                    await sketchFabApi.UpdateModelAsync(myModel.uid, uploadRequest, secrets.SketchFabToken, TokenType.Token);
+                    numModelsUpdated++;
+                }
+                else
+                {
+                    numModelsSkipped++;
                 }
 
-                // Test get model
-                var model = await sketchFabApi.GetModelAsync("f934cb5207624d14841f19ca85b4ea2c", secrets.SketchFabToken, TokenType.Token);
 
-                // Test get my account
-                await GetAccountAsync(secrets.SketchFabToken, TokenType.Bearer);
-
-                // Test add to collection
-                await AddModelsToCollectionAsync(collectionId: "ef4914cce6a842589fecd78ac206a09b", secrets.SketchFabToken, TokenType.Bearer, modelIds: "f9d96fca765044f6a0e83f24bd9dcaa0");
-
-
-
+                logger.LogInformation($"Update models progress: {numModelsUpdated} updated, {numModelsSkipped} skipped");
             }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "Error: " + ex.Message);
-            }
+
+            // Test get model
+            var model = await sketchFabApi.GetModelAsync("f934cb5207624d14841f19ca85b4ea2c", secrets.SketchFabToken, TokenType.Token);
+
+            // Test get my account
+            await GetAccountAsync(secrets.SketchFabToken, TokenType.Bearer);
+
+            // Test add to collection
+            await AddModelsToCollectionAsync(collectionId: "ef4914cce6a842589fecd78ac206a09b", secrets.SketchFabToken, TokenType.Bearer, modelIds: "f9d96fca765044f6a0e83f24bd9dcaa0");
+
+
+
         }
-
-        private async Task AddModelsToCollectionAsync(string collectionId, string bearerToken, TokenType bearer, params string[] modelIds)
+        catch (Exception ex)
         {
-            try
-            {
-                logger.LogInformation($"Add models to collection");
-
-                await sketchFabApi.AddModelToCollectionAsync(collectionId, bearerToken, bearer, modelIds);
-
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "Error: " + ex.Message);
-            }
+            logger.LogError(ex, "Error: " + ex.Message);
         }
+    }
 
-        private async Task GetAccountAsync(string token, TokenType tokenType)
+    private async Task AddModelsToCollectionAsync(string collectionId, string bearerToken, TokenType bearer, params string[] modelIds)
+    {
+        try
         {
-            try
-            {
-                logger.LogInformation($"Getting account info...");
+            logger.LogInformation($"Add models to collection");
 
-                var account = await sketchFabApi.GetMyAccountAsync(token, tokenType);
+            await sketchFabApi.AddModelToCollectionAsync(collectionId, bearerToken, bearer, modelIds);
 
-                var uploadLimit = account.uploadSizeLimit;
-                logger.LogInformation($"Upload size limit for {account.account}: {uploadLimit}");
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "Error: " + ex.Message);
-            }
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error: " + ex.Message);
+        }
+    }
+
+    private async Task GetAccountAsync(string token, TokenType tokenType)
+    {
+        try
+        {
+            logger.LogInformation($"Getting account info...");
+
+            var account = await sketchFabApi.GetMyAccountAsync(token, tokenType);
+
+            var uploadLimit = account.uploadSizeLimit;
+            logger.LogInformation($"Upload size limit for {account.account}: {uploadLimit}");
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error: " + ex.Message);
         }
     }
 }

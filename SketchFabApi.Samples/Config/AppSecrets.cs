@@ -24,11 +24,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-namespace SketchFabApi.Samples
-{
-    public class AppSecrets
-    {
-        public string SketchFabToken { get; set; }
+namespace SketchFabApi.Samples;
 
-    }
+public class AppSecrets
+{
+    public string SketchFabToken { get; set; }
+
 }

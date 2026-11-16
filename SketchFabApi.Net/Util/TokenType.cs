@@ -24,11 +24,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-namespace Sketchfab
+namespace Sketchfab;
+
+public enum TokenType
 {
-    public enum TokenType
-    {
-        Token,
-        Bearer
-    }
+    Token,
+    Bearer
 }
