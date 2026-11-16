@@ -33,27 +33,20 @@ using Sketchfab;
 
 namespace SketchFabApi.Samples;
 
-public class SketchFabSample
-{
-    private readonly ILogger<SketchFabSample> logger;
-    private readonly Sketchfab.SketchfabApi sketchFabApi;
-    private readonly AppSecrets secrets;
-
-    public SketchFabSample(ILogger<SketchFabSample> logger
+public class SketchFabSample(ILogger<SketchFabSample> logger
         , IOptions<AppSecrets> secrets
         , Sketchfab.SketchfabApi sketchFabApi)
-    {
-        this.logger = logger;
-        this.sketchFabApi = sketchFabApi;
-        this.secrets = secrets.Value;
-    }
+{
+    private readonly ILogger<SketchFabSample> logger = logger;
+    private readonly Sketchfab.SketchfabApi sketchFabApi = sketchFabApi;
+    private readonly AppSecrets secrets = secrets.Value;
 
     internal async Task Run()
     {
         try
         {
 
-            HashSet<string> allowedTags = new HashSet<string>(new string[] { "mycenaean-atlas", "elevationapi" });
+            HashSet<string> allowedTags = new HashSet<string>(["mycenaean-atlas", "elevationapi"]);
             int numModelsUpdated = 0;
             int numModelsSkipped = 0;
             await foreach(var myModel in sketchFabApi.GetMyModelsAsync(secrets.SketchFabToken, TokenType.Token))
@@ -65,8 +58,8 @@ public class SketchFabSample
 
                     UpdateModelRequest uploadRequest = new UpdateModelRequest()
                     {
-                        Categories = new List<string>(),
-                        Tags = allowedTags.ToList(),
+                        Categories = [],
+                        Tags = [.. allowedTags],
                         ModelId = myModel.uid,
                     };
                     await sketchFabApi.UpdateModelAsync(myModel.uid, uploadRequest, secrets.SketchFabToken, TokenType.Token);

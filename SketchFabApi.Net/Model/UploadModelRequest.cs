@@ -65,13 +65,13 @@ public class UploadModelRequest
 
 
     [JsonIgnore]
-    public List<string> Tags { get; set; } = new List<string>();
+    public List<string> Tags { get; set; } = [];
 
     [JsonProperty("tags")]
     public string TagsJson => string.Join("\n", Tags);
 
     [JsonIgnore]
-    public List<string> Categories { get; set; } = new List<string>();
+    public List<string> Categories { get; set; } = [];
 
     [JsonProperty("categories")]
     public string CategoriesJson => string.Join("\n", Categories);
@@ -99,13 +99,13 @@ public class UpdateModelRequest
 
 
     [JsonIgnore]
-    public List<string> Tags { get; set; } = new List<string>();
+    public List<string> Tags { get; set; } = [];
 
     [JsonProperty("tags")]
     public string TagsJson => string.Join("\n", Tags);
 
     [JsonIgnore]
-    public List<string> Categories { get; set; } = new List<string>();
+    public List<string> Categories { get; set; } = [];
 
     [JsonProperty("categories")]
     public string CategoriesJson => string.Join("\n", Categories);

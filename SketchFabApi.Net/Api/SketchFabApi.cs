@@ -43,7 +43,7 @@ public partial class SketchfabApi
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly JsonSerializerSettings _jsonSerializerSettings;
     private const string SketchfabApiUrl = "https://api.sketchfab.com/v3";
-    private readonly DefaultContractResolver contractResolver = new DefaultContractResolver
+    private readonly DefaultContractResolver contractResolver = new()
     {
         NamingStrategy = new CamelCaseNamingStrategy()
     };
