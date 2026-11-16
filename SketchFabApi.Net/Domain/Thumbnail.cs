@@ -24,14 +24,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Sketchfab
+namespace Sketchfab;
+
+public class Thumbnail
 {
-    public class Thumbnail
-    {
-        public string height { get; set; }
-        public string width { get; set; }
-        public string url { get; set; }
-    }
-
-
+    public string height { get; set; }
+    public string width { get; set; }
+    public string url { get; set; }
 }

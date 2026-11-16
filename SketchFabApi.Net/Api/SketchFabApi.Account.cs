@@ -31,65 +31,64 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Sketchfab;
 
-namespace Sketchfab
+namespace Sketchfab;
+
+public partial class SketchfabApi
 {
-    public partial class SketchfabApi
+    public async Task<Account> GetMyAccountAsync(string sketchFabToken, TokenType tokenType)
     {
-        public async Task<Account> GetMyAccountAsync(string sketchFabToken, TokenType tokenType)
+        try
         {
-            try
-            {
-                _logger.LogInformation($"Get Account");
+            _logger.LogInformation($"Get Account");
 
-                HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{SketchfabApiUrl}/me/account");
-                httpRequestMessage.AddAuthorizationHeader(sketchFabToken, tokenType);
+            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{SketchfabApiUrl}/me/account");
+            httpRequestMessage.AddAuthorizationHeader(sketchFabToken, tokenType);
 
-                var httpClient = _httpClientFactory.CreateClient();
-                var response = await httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
-                _logger.LogInformation($"{nameof(GetMyAccountAsync)} responded {response.StatusCode}");
-                response.EnsureSuccessStatusCode();
+            var httpClient = _httpClientFactory.CreateClient();
+            var response = await httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
+            _logger.LogInformation($"{nameof(GetMyAccountAsync)} responded {response.StatusCode}");
+            response.EnsureSuccessStatusCode();
 
-                var jsonPayload = await response.Content.ReadAsStringAsync();
+            var jsonPayload = await response.Content.ReadAsStringAsync();
 
-                var account = JsonConvert.DeserializeObject<Account>(jsonPayload);
+            var account = JsonConvert.DeserializeObject<Account>(jsonPayload);
 
-                return account;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Sketchfab get account error: {ex.Message}");
-                throw;
-            }
-
+            return account;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Sketchfab get account error: {ex.Message}");
+            throw;
         }
 
-        public async Task PostLike(string modelId, string sketchFabToken, TokenType tokenType)
+    }
+
+    public async Task PostLike(string modelId, string sketchFabToken, TokenType tokenType)
+    {
+        try
         {
-            try
-            {
-                _logger.LogInformation($"Like model {modelId}");
+            _logger.LogInformation($"Like model {modelId}");
 
-                HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, $"{SketchfabApiUrl}/me/likes");
-                httpRequestMessage.AddAuthorizationHeader(sketchFabToken, tokenType);
+            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, $"{SketchfabApiUrl}/me/likes");
+            httpRequestMessage.AddAuthorizationHeader(sketchFabToken, tokenType);
 
-                using var form = new MultipartFormDataContent();
-                form.Headers.ContentType.MediaType = "multipart/form-data";
+            using var form = new MultipartFormDataContent();
+            form.Headers.ContentType.MediaType = "multipart/form-data";
 
-                form.Add(new StringContent(modelId), "model");
+            form.Add(new StringContent(modelId), "model");
 
-                httpRequestMessage.Content = form;
+            httpRequestMessage.Content = form;
 
-                var httpClient = _httpClientFactory.CreateClient();
-                var response = await httpClient.SendAsync(httpRequestMessage);
+            var httpClient = _httpClientFactory.CreateClient();
+            var response = await httpClient.SendAsync(httpRequestMessage);
 
-                _logger.LogInformation($"{nameof(PostLike)} responded {response.StatusCode}");
-                response.EnsureSuccessStatusCode();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Sketchfab Like error: {ex.Message}");
-                throw;
-            }
+            _logger.LogInformation($"{nameof(PostLike)} responded {response.StatusCode}");
+            response.EnsureSuccessStatusCode();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Sketchfab Like error: {ex.Message}");
+            throw;
         }
     }
 }

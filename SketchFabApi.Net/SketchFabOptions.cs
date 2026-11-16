@@ -1,8 +1,7 @@
 ﻿using System;
 
-namespace Sketchfab
+namespace Sketchfab;
+
+public class SketchfabOptions
 {
-    public class SketchfabOptions
-    {
-    }
 }

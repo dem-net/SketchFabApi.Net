@@ -26,24 +26,23 @@
 using System;
 using System.Net;
 
-namespace Sketchfab
+namespace Sketchfab;
+
+public class SketchfabUploadResponse
 {
-    public class SketchfabUploadResponse
+    public SketchfabUploadResponse()
     {
-        public SketchfabUploadResponse()
-        {
 
-        }
-
-        public SketchfabUploadResponse(HttpStatusCode statusCode, string message)
-        {
-            StatusCode = statusCode;
-            Message = message;
-        }
-
-        public string ModelId { get; set; }
-        public HttpStatusCode StatusCode { get; set; }
-        public string Message { get; set; }
-        public string ViewModelUrl { get; set; }
     }
+
+    public SketchfabUploadResponse(HttpStatusCode statusCode, string message)
+    {
+        StatusCode = statusCode;
+        Message = message;
+    }
+
+    public string ModelId { get; set; }
+    public HttpStatusCode StatusCode { get; set; }
+    public string Message { get; set; }
+    public string ViewModelUrl { get; set; }
 }

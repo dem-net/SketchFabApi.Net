@@ -24,17 +24,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Sketchfab
+namespace Sketchfab;
+
+public class License
 {
-    public class License
-    {
-        public string label { get; set; }
-        public string fullName { get; set; }
-        public string uri { get; set; }
-        public string requirements { get; set; }
-        public string url { get; set; }
-        public string slug { get; set; }
-    }
-
-
+    public string label { get; set; }
+    public string fullName { get; set; }
+    public string uri { get; set; }
+    public string requirements { get; set; }
+    public string url { get; set; }
+    public string slug { get; set; }
 }
