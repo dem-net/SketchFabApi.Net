@@ -23,82 +23,52 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace Sketchfab;
 
-
-
 public partial class SketchfabApi
 {
-
-    public async Task<List<Collection>> GetMyCollectionsAsync(string sketchFabToken, TokenType tokenType)
+    /// <summary>
+    /// Gets all the collections of the token owner (all pages).
+    /// </summary>
+    public async Task<List<Collection>> GetMyCollectionsAsync(string sketchFabToken, TokenType tokenType, CancellationToken cancellationToken = default)
     {
-        try
+        _logger.LogInformation("Get collections");
+
+        var collections = new List<Collection>();
+        await foreach (var collection in GetPagedResultAsync($"{SketchfabApiUrl}/me/collections", sketchFabToken, tokenType,
+            SketchfabJsonContext.Default.PagedResultCollection, cancellationToken).ConfigureAwait(false))
         {
-            _logger.LogInformation($"Get collections");
-
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{SketchfabApiUrl}/me/collections");
-            httpRequestMessage.AddAuthorizationHeader(sketchFabToken, tokenType);
-            
-            var httpClient = _httpClientFactory.CreateClient();
-            var response = await httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseContentRead);
-            _logger.LogInformation($"{nameof(GetMyCollectionsAsync)} responded {response.StatusCode}");
-            response.EnsureSuccessStatusCode();
-
-            var collectionsJson = await response.Content.ReadAsStringAsync();
-
-            var collections = JsonConvert.DeserializeObject<PagedResult<Collection>>(collectionsJson);
-
-            _logger.LogInformation($"GetMyCollectionsAsync got {collections.results.Count} collection(s).");
-
-            return collections.results;
+            collections.Add(collection);
         }
-        catch (Exception ex)
-        {
-            _logger.LogError($"Sketchfab upload error: {ex.Message}");
-            throw;
-        }
-
+        return collections;
     }
 
-    public async Task AddModelToCollectionAsync(string collectionId, string sketchFabToken, TokenType tokenType, params string[] modelIds)
+    public Task AddModelToCollectionAsync(string collectionId, string sketchFabToken, TokenType tokenType, params string[] modelIds)
+        => AddModelToCollectionAsync(collectionId, sketchFabToken, tokenType, (IEnumerable<string>)modelIds, CancellationToken.None);
+
+    public async Task AddModelToCollectionAsync(string collectionId, string sketchFabToken, TokenType tokenType, IEnumerable<string> modelIds, CancellationToken cancellationToken = default)
     {
-        try
-        {
-            _logger.LogInformation($"Add model(s) to collection");
-            if (modelIds == null || modelIds.Length == 0) throw new ArgumentNullException(nameof(modelIds));
-            if (string.IsNullOrWhiteSpace(collectionId)) throw new ArgumentNullException(nameof(collectionId));
+        ArgumentException.ThrowIfNullOrWhiteSpace(collectionId);
+        ArgumentNullException.ThrowIfNull(modelIds);
+        var ids = modelIds as IReadOnlyCollection<string> ?? [.. modelIds];
+        if (ids.Count == 0) throw new ArgumentException("At least one model id is required.", nameof(modelIds));
 
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, $"{SketchfabApiUrl}/collections/{collectionId}/models");
-            httpRequestMessage.AddAuthorizationHeader(sketchFabToken, tokenType);
+        _logger.LogInformation("Add {Count} model(s) to collection {CollectionId}", ids.Count, collectionId);
 
-            using var form = new MultipartFormDataContent();
-            form.Headers.ContentType.MediaType = "multipart/form-data";
+        using var form = new MultipartFormDataContent();
+        form.AddRange(ids, "models");
+        using var request = CreateRequest(HttpMethod.Post, $"{SketchfabApiUrl}/collections/{collectionId}/models", sketchFabToken, tokenType);
+        request.Content = form;
 
-            form.AddRange(modelIds, "models");
-
-            httpRequestMessage.Content = form;
-
-            var httpClient = _httpClientFactory.CreateClient();
-            var response = await httpClient.SendAsync(httpRequestMessage);
-
-            _logger.LogInformation($"{nameof(AddModelToCollectionAsync)} responded {response.StatusCode}");
-            response.EnsureSuccessStatusCode();
-
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError($"Sketchfab add model(s) to collection error: {ex.Message}");
-            throw;
-        }
-
+        await SendAsync(request, nameof(AddModelToCollectionAsync), cancellationToken).ConfigureAwait(false);
     }
-
 }

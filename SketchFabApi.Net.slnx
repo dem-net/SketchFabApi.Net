@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="SketchFabApi.Net/SketchFabApi.Net.csproj" />
   <Project Path="SketchFabApi.Samples/SketchFabApi.Samples.csproj" />
+  <Project Path="SketchFabApi.Net.Tests/SketchFabApi.Net.Tests.csproj" />
 </Solution>

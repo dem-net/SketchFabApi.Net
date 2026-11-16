@@ -1,0 +1,337 @@
+{
+  "cursors": {
+    "next": "bz0y",
+    "previous": null
+  },
+  "next": "https://api.sketchfab.com/v3/models?count=2&cursor=bz0y&user=xfischer",
+  "previous": null,
+  "results": [
+    {
+      "uri": "https://api.sketchfab.com/v3/models/0748f23e3d0049639bc94ef99e1f8fab",
+      "uid": "0748f23e3d0049639bc94ef99e1f8fab",
+      "name": "Huants\u00e1n, Peru",
+      "staffpickedAt": null,
+      "viewCount": 266,
+      "likeCount": 4,
+      "animationCount": 0,
+      "viewerUrl": "https://sketchfab.com/3d-models/none-0748f23e3d0049639bc94ef99e1f8fab",
+      "embedUrl": "https://sketchfab.com/models/0748f23e3d0049639bc94ef99e1f8fab/embed",
+      "commentCount": 0,
+      "isDownloadable": false,
+      "publishedAt": "2022-07-15T16:34:35.117664",
+      "tags": [
+        {
+          "name": "mountain",
+          "slug": "mountain",
+          "uri": "https://api.sketchfab.com/v3/tags/mountain"
+        },
+        {
+          "name": "peak",
+          "slug": "peak",
+          "uri": "https://api.sketchfab.com/v3/tags/peak"
+        },
+        {
+          "name": "cordillera",
+          "slug": "cordillera",
+          "uri": "https://api.sketchfab.com/v3/tags/cordillera"
+        },
+        {
+          "name": "elevationapi",
+          "slug": "elevationapi",
+          "uri": "https://api.sketchfab.com/v3/tags/elevationapi"
+        }
+      ],
+      "categories": [
+        {
+          "name": "nature-plants"
+        },
+        {
+          "name": "places-travel"
+        }
+      ],
+      "thumbnails": {
+        "images": [
+          {
+            "uid": "5782c7ffc2cc461e9133ab4982c4951f",
+            "size": 310989,
+            "width": 1920,
+            "url": "https://media.sketchfab.com/models/0748f23e3d0049639bc94ef99e1f8fab/thumbnails/4ad42b03f9ac44aebc73ea79cd5bd05f/076b66aea95640f3835895a356c422a5.jpeg",
+            "height": 1080
+          },
+          {
+            "uid": "38883f36668d4b84bbde6e332be20f25",
+            "size": 70894,
+            "width": 1024,
+            "url": "https://media.sketchfab.com/models/0748f23e3d0049639bc94ef99e1f8fab/thumbnails/4ad42b03f9ac44aebc73ea79cd5bd05f/b48426e5258c4b13b3cf1fce92e64001.jpeg",
+            "height": 576
+          },
+          {
+            "uid": "3ba523c885f940179cac0c4d78c7b9a9",
+            "size": 38946,
+            "width": 720,
+            "url": "https://media.sketchfab.com/models/0748f23e3d0049639bc94ef99e1f8fab/thumbnails/4ad42b03f9ac44aebc73ea79cd5bd05f/4a483339869a461588122694ab4a2e6f.jpeg",
+            "height": 405
+          },
+          {
+            "uid": "1386d9eecd794639afc99878e4410b57",
+            "size": 7038,
+            "width": 256,
+            "url": "https://media.sketchfab.com/models/0748f23e3d0049639bc94ef99e1f8fab/thumbnails/4ad42b03f9ac44aebc73ea79cd5bd05f/3c405c0abfd6489f94abf1d4a4203b5f.jpeg",
+            "height": 144
+          },
+          {
+            "uid": "b94d001f5c90497bb7826c4e908ebe8f",
+            "size": 1312,
+            "width": 64,
+            "url": "https://media.sketchfab.com/models/0748f23e3d0049639bc94ef99e1f8fab/thumbnails/4ad42b03f9ac44aebc73ea79cd5bd05f/52fac33596e64e879378f3b7ac31943d.jpeg",
+            "height": 36
+          }
+        ]
+      },
+      "user": {
+        "uid": "a29449c23f084a818bf681583f58165b",
+        "username": "xfischer",
+        "displayName": "Xavier Fischer - Elevation API",
+        "profileUrl": "https://sketchfab.com/xfischer",
+        "account": "basic",
+        "avatar": {
+          "uri": "https://api.sketchfab.com/v3/avatars/1df939cdf94140eab999372974720181",
+          "images": [
+            {
+              "size": 2052,
+              "width": 32,
+              "url": "https://media.sketchfab.com/avatars/1df939cdf94140eab999372974720181/78d4c8cfa8ca470eb485e528a939168f.png",
+              "height": 32
+            },
+            {
+              "size": 4193,
+              "width": 48,
+              "url": "https://media.sketchfab.com/avatars/1df939cdf94140eab999372974720181/e7d19e28d7a349e590fa5ddfecfab6e9.png",
+              "height": 48
+            },
+            {
+              "size": 11609,
+              "width": 90,
+              "url": "https://media.sketchfab.com/avatars/1df939cdf94140eab999372974720181/21e68b1b8dfb443aa3d315dde793bc23.png",
+              "height": 90
+            },
+            {
+              "size": 13610,
+              "width": 100,
+              "url": "https://media.sketchfab.com/avatars/1df939cdf94140eab999372974720181/30531296e9d9447fa2d8d3d0849c8bc0.png",
+              "height": 100
+            }
+          ]
+        },
+        "uri": "https://api.sketchfab.com/v3/users/a29449c23f084a818bf681583f58165b"
+      },
+      "description": "Inspiration : https://twitter.com/subfossilguy/status/1545413944436744194\n\n* Generator: [DEM Net Elevation API](https://elevationapi.com)\n* Mesh reduction: [geometry3Sharp (GradientSpace, Ryan Schmidt) BSL 1.0 License](https://github.com/gradientspace/geometry3Sharp/blob/master/LICENSE)\n* Digital Elevation Model: [AW3D30 OpenTopography](https://opentopography.org/)\n* Imagery: [MapBox Satellite](https://www.mapbox.com)",
+      "faceCount": 42870,
+      "createdAt": "2022-07-15T16:12:54.985414",
+      "vertexCount": 21607,
+      "isAgeRestricted": false,
+      "soundCount": 0,
+      "isProtected": false,
+      "license": {
+        "uid": "783b685da9bf457d81e829fa283f3567",
+        "label": "Standard"
+      },
+      "price": null,
+      "archives": {
+        "glb": {
+          "textureCount": 1,
+          "size": 11774088,
+          "type": "glb",
+          "textureMaxResolution": 4096,
+          "faceCount": 42748,
+          "vertexCount": 21769
+        },
+        "gltf": {
+          "textureCount": 1,
+          "size": 11137371,
+          "type": "gltf",
+          "textureMaxResolution": 4096,
+          "faceCount": 42748,
+          "vertexCount": 21769
+        },
+        "source": {
+          "textureCount": null,
+          "size": 48877274,
+          "type": "source",
+          "textureMaxResolution": null,
+          "faceCount": null,
+          "vertexCount": null
+        },
+        "usdz": {
+          "textureCount": null,
+          "size": 11277219,
+          "type": "usdz",
+          "textureMaxResolution": null,
+          "faceCount": null,
+          "vertexCount": null
+        }
+      }
+    },
+    {
+      "uri": "https://api.sketchfab.com/v3/models/24c1315c04cb4c728d18faeed1043a0c",
+      "uid": "24c1315c04cb4c728d18faeed1043a0c",
+      "name": "Scotland, North Ireland",
+      "staffpickedAt": null,
+      "viewCount": 193,
+      "likeCount": 7,
+      "animationCount": 0,
+      "viewerUrl": "https://sketchfab.com/3d-models/none-24c1315c04cb4c728d18faeed1043a0c",
+      "embedUrl": "https://sketchfab.com/models/24c1315c04cb4c728d18faeed1043a0c/embed",
+      "commentCount": 0,
+      "isDownloadable": false,
+      "publishedAt": "2021-03-25T21:15:38.865614",
+      "tags": [
+        {
+          "name": "scotland",
+          "slug": "scotland",
+          "uri": "https://api.sketchfab.com/v3/tags/scotland"
+        },
+        {
+          "name": "ireland",
+          "slug": "ireland",
+          "uri": "https://api.sketchfab.com/v3/tags/ireland"
+        },
+        {
+          "name": "elevationapi",
+          "slug": "elevationapi",
+          "uri": "https://api.sketchfab.com/v3/tags/elevationapi"
+        }
+      ],
+      "categories": [
+        {
+          "name": "nature-plants"
+        },
+        {
+          "name": "places-travel"
+        }
+      ],
+      "thumbnails": {
+        "images": [
+          {
+            "uid": "a32406692a374916af543fdddbae2bc5",
+            "size": 297346,
+            "width": 1920,
+            "url": "https://media.sketchfab.com/models/24c1315c04cb4c728d18faeed1043a0c/thumbnails/82a92525e7f74f5dab1ebd4d884d3bed/2a56ea19968a459494362de81d1aae66.jpeg",
+            "height": 1080
+          },
+          {
+            "uid": "9c0bbeef322845c281cfa137e9015a3f",
+            "size": 60559,
+            "width": 1024,
+            "url": "https://media.sketchfab.com/models/24c1315c04cb4c728d18faeed1043a0c/thumbnails/82a92525e7f74f5dab1ebd4d884d3bed/4dab89f77f8e481b93459cc0526af37b.jpeg",
+            "height": 576
+          },
+          {
+            "uid": "b11b132a9f684d25ac07b04ea30908c5",
+            "size": 33742,
+            "width": 720,
+            "url": "https://media.sketchfab.com/models/24c1315c04cb4c728d18faeed1043a0c/thumbnails/82a92525e7f74f5dab1ebd4d884d3bed/cffe5299c7be459db3e3489651cba233.jpeg",
+            "height": 405
+          },
+          {
+            "uid": "71b7bd6e8f8049d4ad9dbf19d2e7d617",
+            "size": 6847,
+            "width": 256,
+            "url": "https://media.sketchfab.com/models/24c1315c04cb4c728d18faeed1043a0c/thumbnails/82a92525e7f74f5dab1ebd4d884d3bed/e9bb4a243ca54a5e9f96e3a6775a196d.jpeg",
+            "height": 144
+          },
+          {
+            "uid": "d3a4027df2a143ca915ad939b9d13710",
+            "size": 1086,
+            "width": 64,
+            "url": "https://media.sketchfab.com/models/24c1315c04cb4c728d18faeed1043a0c/thumbnails/82a92525e7f74f5dab1ebd4d884d3bed/04dec049758446079149198ec332ae31.jpeg",
+            "height": 36
+          }
+        ]
+      },
+      "user": {
+        "uid": "a29449c23f084a818bf681583f58165b",
+        "username": "xfischer",
+        "displayName": "Xavier Fischer - Elevation API",
+        "profileUrl": "https://sketchfab.com/xfischer",
+        "account": "basic",
+        "avatar": {
+          "uri": "https://api.sketchfab.com/v3/avatars/1df939cdf94140eab999372974720181",
+          "images": [
+            {
+              "size": 2052,
+              "width": 32,
+              "url": "https://media.sketchfab.com/avatars/1df939cdf94140eab999372974720181/78d4c8cfa8ca470eb485e528a939168f.png",
+              "height": 32
+            },
+            {
+              "size": 4193,
+              "width": 48,
+              "url": "https://media.sketchfab.com/avatars/1df939cdf94140eab999372974720181/e7d19e28d7a349e590fa5ddfecfab6e9.png",
+              "height": 48
+            },
+            {
+              "size": 11609,
+              "width": 90,
+              "url": "https://media.sketchfab.com/avatars/1df939cdf94140eab999372974720181/21e68b1b8dfb443aa3d315dde793bc23.png",
+              "height": 90
+            },
+            {
+              "size": 13610,
+              "width": 100,
+              "url": "https://media.sketchfab.com/avatars/1df939cdf94140eab999372974720181/30531296e9d9447fa2d8d3d0849c8bc0.png",
+              "height": 100
+            }
+          ]
+        },
+        "uri": "https://api.sketchfab.com/v3/users/a29449c23f084a818bf681583f58165b"
+      },
+      "description": "Spotted by Brant from Discord https://discord.gg/TZgZsEgEzm\n\n* Generator: [DEM Net Elevation API](https://elevationapi.com)\n* Digital Elevation Model: [GEBCO Compilation Group (2019) GEBCO 2019 Grid (doi:10.5285/836f016a-33be-6ddc-e053-6c86abc0788e)](https://www.gebco.net/data_and_products/gridded_bathymetry_data/gebco_2019/gebco_2019_info.html)\n* Imagery: [Esri World Imagery](https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer)",
+      "faceCount": 541410,
+      "createdAt": "2021-03-25T20:48:52.461522",
+      "vertexCount": 271700,
+      "isAgeRestricted": false,
+      "soundCount": 0,
+      "isProtected": false,
+      "license": {
+        "uid": "783b685da9bf457d81e829fa283f3567",
+        "label": "Standard"
+      },
+      "price": null,
+      "archives": {
+        "glb": {
+          "textureCount": 1,
+          "size": 18950888,
+          "type": "glb",
+          "textureMaxResolution": 4096,
+          "faceCount": 541104,
+          "vertexCount": 274423
+        },
+        "gltf": {
+          "textureCount": 1,
+          "size": 10232255,
+          "type": "gltf",
+          "textureMaxResolution": 4096,
+          "faceCount": 541104,
+          "vertexCount": 274423
+        },
+        "source": {
+          "textureCount": null,
+          "size": 25388267,
+          "type": "source",
+          "textureMaxResolution": null,
+          "faceCount": null,
+          "vertexCount": null
+        },
+        "usdz": {
+          "textureCount": null,
+          "size": 12292136,
+          "type": "usdz",
+          "textureMaxResolution": null,
+          "faceCount": null,
+          "vertexCount": null
+        }
+      }
+    }
+  ]
+}

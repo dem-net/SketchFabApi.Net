@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Sketchfab;
 
@@ -7,7 +7,7 @@ public class UploadModelRequest
 {
 
     [JsonIgnore]
-    public string Source { get; set; }
+    public string? Source { get; set; }
 
     /// <summary>
     /// Set to Bearer when token was obtained using OAuth2 flow
@@ -20,36 +20,36 @@ public class UploadModelRequest
     /// <summary>
     /// Sketchfab uuid
     /// </summary>
-    [JsonProperty("uid")]
-    public string ModelId { get; set; }
+    [JsonPropertyName("uid")]
+    public string? ModelId { get; set; }
 
 
-    [JsonProperty("name")]
+    [JsonPropertyName("name")]
     public string Name { get; set; }
 
     /// <summary>
     /// Sets private [pro only]
     /// </summary>
 
-    [JsonProperty("private")]
+    [JsonPropertyName("private")]
     public bool IsPrivate { get; set; }
 
     /// <summary>
     /// Enables 2D view in model inspector. All downloadable models must have isInspectable enabled.
     /// </summary>
-    [JsonProperty("isInspectable")]
+    [JsonPropertyName("isInspectable")]
     public bool IsInspectable { get; set; }
 
     /// <summary>
     /// Sets published after it is processed
     /// </summary>
-    [JsonProperty("isPublished")]
+    [JsonPropertyName("isPublished")]
     public bool IsPublished { get; set; }
 
     /// <summary>
     /// Sets a password [pro only]
     /// </summary>
-    [JsonProperty("password")]
+    [JsonPropertyName("password")]
     public string Password { get; set; }
 
 
@@ -60,26 +60,26 @@ public class UploadModelRequest
     /// 
     /// 
     /// </summary>
-    [JsonProperty("license")]
+    [JsonPropertyName("license")]
     public string License { get; set; } = "by-nc-sa";
 
 
     [JsonIgnore]
     public List<string> Tags { get; set; } = [];
 
-    [JsonProperty("tags")]
+    [JsonPropertyName("tags")]
     public string TagsJson => string.Join("\n", Tags);
 
     [JsonIgnore]
     public List<string> Categories { get; set; } = [];
 
-    [JsonProperty("categories")]
+    [JsonPropertyName("categories")]
     public string CategoriesJson => string.Join("\n", Categories);
 
-    [JsonProperty("description")]
+    [JsonPropertyName("description")]
     public string Description { get; set; }
 
-    [JsonProperty("options")]
+    [JsonPropertyName("options")]
     public ModelOptions Options { get; set; } = new ModelOptions();
 
     [JsonIgnore]
@@ -94,20 +94,20 @@ public class UpdateModelRequest
     /// <summary>
     /// Sketchfab uuid
     /// </summary>
-    [JsonProperty("uid")]
+    [JsonPropertyName("uid")]
     public string ModelId { get; set; }
 
 
     [JsonIgnore]
     public List<string> Tags { get; set; } = [];
 
-    [JsonProperty("tags")]
+    [JsonPropertyName("tags")]
     public string TagsJson => string.Join("\n", Tags);
 
     [JsonIgnore]
     public List<string> Categories { get; set; } = [];
 
-    [JsonProperty("categories")]
+    [JsonPropertyName("categories")]
     public string CategoriesJson => string.Join("\n", Categories);
 
    

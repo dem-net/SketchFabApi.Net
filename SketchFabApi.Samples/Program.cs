@@ -28,11 +28,11 @@ class Program
         ConfigureServices(config, serviceCollection);
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        await serviceProvider.GetRequiredService<SketchFabSample>().Run();
+        await serviceProvider.GetRequiredService<SketchFabSample>().RunAsync();
 
     }
 
-    private static IConfigurationRoot BuildConfiguration()
+    private static IConfigurationRoot? BuildConfiguration()
     {
         try
         {
@@ -58,11 +58,7 @@ class Program
         services.AddLogging(config =>
         {
             config.AddDebug(); // Log to debug (debug window in Visual Studio or any debugger attached)
-            config.AddConsole(o =>
-            {
-                o.IncludeScopes = false;
-                o.DisableColors = false;
-            }); // Log to console (colored !)
+            config.AddSimpleConsole(o => o.IncludeScopes = false); // Log to console (colored !)
         })
        .Configure<LoggerFilterOptions>(options =>
        {
@@ -77,7 +73,7 @@ class Program
         services.Configure<AppSecrets>(config.GetSection(nameof(AppSecrets)));
 
 
-        services.AddScoped<Sketchfab.SketchfabApi>();
+        services.AddSketchfabApi();
         services.AddSingleton<SketchFabSample>();
 
 
