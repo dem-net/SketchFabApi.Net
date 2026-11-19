@@ -25,7 +25,7 @@ public class UploadModelRequest
 
 
     [JsonPropertyName("name")]
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// Sets private [pro only]
@@ -50,7 +50,7 @@ public class UploadModelRequest
     /// Sets a password [pro only]
     /// </summary>
     [JsonPropertyName("password")]
-    public string Password { get; set; }
+    public string? Password { get; set; }
 
 
 
@@ -77,13 +77,13 @@ public class UploadModelRequest
     public string CategoriesJson => string.Join("\n", Categories);
 
     [JsonPropertyName("description")]
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     [JsonPropertyName("options")]
     public ModelOptions Options { get; set; } = new ModelOptions();
 
     [JsonIgnore]
-    public string FilePath { get; set; }
+    public string? FilePath { get; set; }
 
 
 }
@@ -95,7 +95,7 @@ public class UpdateModelRequest
     /// Sketchfab uuid
     /// </summary>
     [JsonPropertyName("uid")]
-    public string ModelId { get; set; }
+    public string? ModelId { get; set; }
 
 
     [JsonIgnore]

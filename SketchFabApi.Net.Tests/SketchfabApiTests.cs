@@ -21,11 +21,11 @@ public class SketchfabApiTests
 
         Assert.Equal("f934cb5207624d14841f19ca85b4ea2c", model.uid);
         Assert.True(model.IsReady());
-        Assert.Equal("xfischer", model.user.username);
-        Assert.Equal("by-nc-sa", model.license.slug);
-        Assert.Equal(7, model.tags.Count);
-        Assert.Equal(5, model.thumbnails.images.Count);
-        Assert.Equal(1920, model.thumbnails.images[0].width);
+        Assert.Equal("xfischer", model.user!.username);
+        Assert.Equal("by-nc-sa", model.license!.slug);
+        Assert.Equal(7, model.tags!.Count);
+        Assert.Equal(5, model.thumbnails!.images!.Count);
+        Assert.Equal(1920, model.thumbnails!.images[0].width);
         Assert.Equal(new DateTime(2020, 4, 21, 23, 20, 34), model.createdAt.AddTicks(-(model.createdAt.Ticks % TimeSpan.TicksPerSecond)));
         Assert.NotNull(model.publishedAt);
     }
@@ -34,12 +34,12 @@ public class SketchfabApiTests
     public void PagedResults_DeserializeRealResponses()
     {
         var models = JsonSerializer.Deserialize(Fixture("models-page.json"), SketchfabJsonContext.Default.PagedResultModel)!;
-        Assert.Equal(2, models.results.Count);
+        Assert.Equal(2, models.results!.Count);
         Assert.NotNull(models.next);
 
         var collections = JsonSerializer.Deserialize(Fixture("collections-page.json"), SketchfabJsonContext.Default.PagedResultCollection)!;
-        Assert.Equal(2, collections.results.Count);
-        Assert.Equal("ef4914cce6a842589fecd78ac206a09b", collections.results[0].uid);
+        Assert.Equal(2, collections.results!.Count);
+        Assert.Equal("ef4914cce6a842589fecd78ac206a09b", collections.results![0].uid);
         Assert.NotNull(collections.next);
     }
 

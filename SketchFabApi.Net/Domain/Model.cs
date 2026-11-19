@@ -35,39 +35,39 @@ public class Warning
 
 public class Status
 {
-    public string processing { get; set; }
-    public Warning warning { get; set; }
+    public string? processing { get; set; }
+    public Warning? warning { get; set; }
 }
 
 public class Model
 {
     public int vertexCount { get; set; }
-    public string description { get; set; }
-    public License license { get; set; }
-    public User user { get; set; }
+    public string? description { get; set; }
+    public License? license { get; set; }
+    public User? user { get; set; }
     public bool isProtected { get; set; }
-    public string viewerUrl { get; set; }
-    public string uid { get; set; }
+    public string? viewerUrl { get; set; }
+    public string uid { get; set; } = null!;
     public int soundCount { get; set; }
-    public IList<Category> categories { get; set; }
+    public IList<Category>? categories { get; set; }
     public int faceCount { get; set; }
     public DateTime createdAt { get; set; }
     public bool isAgeRestricted { get; set; }
-    public IList<Tag> tags { get; set; }
-    public string name { get; set; }
+    public IList<Tag>? tags { get; set; }
+    public string? name { get; set; }
     public int animationCount { get; set; }
     public int commentCount { get; set; }
-    public Thumbnails thumbnails { get; set; }
+    public Thumbnails? thumbnails { get; set; }
     public bool isDownloadable { get; set; }
-    public string embedUrl { get; set; }
+    public string? embedUrl { get; set; }
     public int likeCount { get; set; }
-    public object price { get; set; }
+    public object? price { get; set; }
     public DateTime? publishedAt { get; set; }
-    public string uri { get; set; }
-    public Status status { get; set; }
-    public object staffpickedAt { get; set; }
+    public string? uri { get; set; }
+    public Status? status { get; set; }
+    public object? staffpickedAt { get; set; }
     public int viewCount { get; set; }
-    public string editorUrl { get; set; }
+    public string? editorUrl { get; set; }
     public int downloadCount { get; set; }
 }
 
@@ -90,6 +90,6 @@ public static class ModelExtensions
 
     private static bool HasStatus(this Model model, string expectedStatus)
     {
-        return model != null && model.status.processing == expectedStatus;
+        return model != null && model.status!.processing == expectedStatus;
     }
 }

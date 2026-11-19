@@ -30,14 +30,14 @@ namespace Sketchfab;
 
 public class PagedResult<T>
 {
-    public string next { get; set; }
-    public Cursors cursors { get; set; }
-    public string previous { get; set; }
-    public List<T> results { get; set; }
+    public string? next { get; set; }
+    public Cursors? cursors { get; set; }
+    public string? previous { get; set; }
+    public List<T>? results { get; set; }
 }
 
 public class Cursors
 {
-    public string next { get; set; }
-    public string previous { get; set; }
+    public string? next { get; set; }
+    public string? previous { get; set; }
 }

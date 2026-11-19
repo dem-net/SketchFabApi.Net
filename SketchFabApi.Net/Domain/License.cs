@@ -28,10 +28,10 @@ namespace Sketchfab;
 
 public class License
 {
-    public string label { get; set; }
-    public string fullName { get; set; }
-    public string uri { get; set; }
-    public string requirements { get; set; }
-    public string url { get; set; }
-    public string slug { get; set; }
+    public string? label { get; set; }
+    public string? fullName { get; set; }
+    public string? uri { get; set; }
+    public string? requirements { get; set; }
+    public string? url { get; set; }
+    public string? slug { get; set; }
 }
