@@ -28,7 +28,7 @@ namespace Sketchfab;
 
 public class Tag
 {
-    public string name { get; set; }
-    public string uri { get; set; }
-    public string slug { get; set; }
+    public string? name { get; set; }
+    public string? uri { get; set; }
+    public string? slug { get; set; }
 }

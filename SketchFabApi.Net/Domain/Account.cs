@@ -29,25 +29,25 @@ namespace Sketchfab;
 public class Account
 {
     public bool canProtectModels { get; set; }
-    public string account { get; set; }
-    public ViewOnlyLimit viewOnlyLimit { get; set; }
+    public string? account { get; set; }
+    public ViewOnlyLimit? viewOnlyLimit { get; set; }
     public DateTime joinedAt { get; set; }
-    public PrivateModelsLimit privateModelsLimit { get; set; }
-    public object renewsAt { get; set; }
-    public object billingCycle { get; set; }
+    public PrivateModelsLimit? privateModelsLimit { get; set; }
+    public object? renewsAt { get; set; }
+    public object? billingCycle { get; set; }
     public int uploadSizeLimit { get; set; }
 }
 
 public class ViewOnlyLimit
 {
-    public string type { get; set; }
+    public string? type { get; set; }
     public DateTime renews_at { get; set; }
     public int remaining { get; set; }
 }
 
 public class PrivateModelsLimit
 {
-    public object count { get; set; }
-    public object since { get; set; }
-    public object until { get; set; }
+    public object? count { get; set; }
+    public object? since { get; set; }
+    public object? until { get; set; }
 }

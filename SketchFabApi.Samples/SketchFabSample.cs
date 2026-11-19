@@ -49,10 +49,10 @@ public class SketchFabSample(ILogger<SketchFabSample> logger
             HashSet<string> allowedTags = new HashSet<string>(["mycenaean-atlas", "elevationapi"]);
             int numModelsUpdated = 0;
             int numModelsSkipped = 0;
-            await foreach(var myModel in sketchFabApi.GetMyModelsAsync(secrets.SketchFabToken, TokenType.Token))
+            await foreach(var myModel in sketchFabApi.GetMyModelsAsync(secrets.SketchFabToken!, TokenType.Token))
             {
                 // If model has categories or forbidden tags, update it
-                if (myModel.categories.Any() || myModel.tags.Any(t => !allowedTags.Contains(t.name)))
+                if (myModel.categories!.Any() || myModel.tags!.Any(t => !allowedTags.Contains(t.name!)))
                 {
                     await Task.Delay(30000); // avoid HTTP 429 too many requests
 
@@ -62,7 +62,7 @@ public class SketchFabSample(ILogger<SketchFabSample> logger
                         Tags = [.. allowedTags],
                         ModelId = myModel.uid,
                     };
-                    await sketchFabApi.UpdateModelAsync(myModel.uid, uploadRequest, secrets.SketchFabToken, TokenType.Token);
+                    await sketchFabApi.UpdateModelAsync(myModel.uid, uploadRequest, secrets.SketchFabToken!, TokenType.Token);
                     numModelsUpdated++;
                 }
                 else
@@ -75,13 +75,13 @@ public class SketchFabSample(ILogger<SketchFabSample> logger
             }
 
             // Test get model
-            var model = await sketchFabApi.GetModelAsync("f934cb5207624d14841f19ca85b4ea2c", secrets.SketchFabToken, TokenType.Token);
+            var model = await sketchFabApi.GetModelAsync("f934cb5207624d14841f19ca85b4ea2c", secrets.SketchFabToken!, TokenType.Token);
 
             // Test get my account
-            await GetAccountAsync(secrets.SketchFabToken, TokenType.Bearer);
+            await GetAccountAsync(secrets.SketchFabToken!, TokenType.Bearer);
 
             // Test add to collection
-            await AddModelsToCollectionAsync(collectionId: "ef4914cce6a842589fecd78ac206a09b", secrets.SketchFabToken, TokenType.Bearer, modelIds: "f9d96fca765044f6a0e83f24bd9dcaa0");
+            await AddModelsToCollectionAsync(collectionId: "ef4914cce6a842589fecd78ac206a09b", secrets.SketchFabToken!, TokenType.Bearer, modelIds: "f9d96fca765044f6a0e83f24bd9dcaa0");
 
 
 

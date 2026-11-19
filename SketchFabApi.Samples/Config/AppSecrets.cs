@@ -28,6 +28,6 @@ namespace SketchFabApi.Samples;
 
 public class AppSecrets
 {
-    public string SketchFabToken { get; set; }
+    public string? SketchFabToken { get; set; }
 
 }

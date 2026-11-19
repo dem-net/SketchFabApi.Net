@@ -11,7 +11,7 @@ public class ModelOptions
     /// <see cref="SkecthFabEnvironment"/>
     /// </summary>
     public ModelOptionsBackground Background { get; set; } = SkecthFabEnvironment.Studio;
-    public string Orientation { get; set; }// = "{\"axis\": [1, 1, 0], \"angle\": 34}";
+    public string? Orientation { get; set; }// = "{\"axis\": [1, 1, 0], \"angle\": 34}";
 
 
 
@@ -41,9 +41,9 @@ public static class SkecthFabEnvironment
 }
 public class ModelOptionsBackground
 {
-    public string Environment { get; set; }
-    public string Image { get; set; }
-    public string Color { get; set; }
+    public string? Environment { get; set; }
+    public string? Image { get; set; }
+    public string? Color { get; set; }
     //public bool Transparent { get; set; }
 }
 

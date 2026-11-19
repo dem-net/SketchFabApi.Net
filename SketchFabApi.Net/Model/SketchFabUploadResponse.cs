@@ -43,6 +43,6 @@ public class SketchfabUploadResponse
 
     public string? ModelId { get; set; }
     public HttpStatusCode StatusCode { get; set; }
-    public string Message { get; set; }
-    public string ViewModelUrl { get; set; }
+    public string? Message { get; set; }
+    public string? ViewModelUrl { get; set; }
 }
